@@ -4,7 +4,7 @@ IOTA Button is your one click away from the tangle.
 [![Open Source Love](https://firstcontributions.github.io/open-source-badges/badges/open-source-v1/open-source.svg)](https://github.com/firstcontributions/open-source-badges)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Generic badge](https://img.shields.io/badge/STATUS-PROTOTYPE-blue.svg)](https://shields.io/)
-[![GitHub issues](https://img.shields.io/github/issues/adamkundrat/iota-button.svg)](https://GitHub.com/adamkundrat/iota-button/issues/)
+[![GitHub issues](https://img.shields.io/github/issues/iota-community/iota-button.svg)](https://GitHub.com/iota-community/iota-button/issues/)
 
 > This project is an initial prototype to share it with IOTA community to collect feedback.
 > I got two young kids, did this over a weekend to get this started so be nice:) 
@@ -44,14 +44,14 @@ See list of suggested enhancements to be discussed here (slowly building this on
 Initially, these enhancements are focusing on functional requirements before we agree on technical solution.
 
 Features/ideas:
-* Accepting Payment - https://github.com/adamkundrat/iota-button/issues/1
-* Address Balance (inc. history) - https://github.com/adamkundrat/iota-button/issues/9
-* Donations (inc. history) - https://github.com/adamkundrat/iota-button/issues/7
-* Reviews (utilising MAM) - https://github.com/adamkundrat/iota-button/issues/4
+* Accepting Payment - https://github.com/iota-community/iota-button/issues/1
+* Address Balance (inc. history) - https://github.com/iota-community/iota-button/issues/9
+* Donations (inc. history) - https://github.com/iota-community/iota-button/issues/7
+* Reviews (utilising MAM) - https://github.com/iota-community/iota-button/issues/4
    * this could go really nicely with physical hardware (i.e. https://www.maclocks.com/blog/your-business-needs-a-customer-feedback-kiosk/)   
-* Receipts/Checkout - https://github.com/adamkundrat/iota-button/issues/8
-* MAM Channels (seller/buyer communication, receiving of digital assets, widgets) - https://github.com/adamkundrat/iota-button/issues/2
-* Plugins (for 3rd parties) - https://github.com/adamkundrat/iota-button/issues/3
+* Receipts/Checkout - https://github.com/iota-community/iota-button/issues/8
+* MAM Channels (seller/buyer communication, receiving of digital assets, widgets) - https://github.com/iota-community/iota-button/issues/2
+* Plugins (for 3rd parties) - https://github.com/iota-community/iota-button/issues/3
    * This can give third party ability to extend it. For example, ability to fund IOTA from credit card. Those users that don't have any.
    * Notifications
    * Validations
@@ -75,8 +75,8 @@ If you're interested to get involved reach out to me on twitter (https://twitter
 Any feedback will be highly appreciated.
 
 ## Contributors
-<a href="https://github.com/adamkundrat/iota-button/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=adamkundrat/iota-button" />
+<a href="https://github.com/iota-community/iota-button/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=iota-community/iota-button" />
 </a>
 
 ## Donations
