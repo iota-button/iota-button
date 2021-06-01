@@ -7,7 +7,6 @@ IOTA Button is your one click away from the tangle.
 [![GitHub issues](https://img.shields.io/github/issues/iota-community/iota-button.svg)](https://GitHub.com/iota-community/iota-button/issues/)
 
 > This project is an initial prototype to share it with IOTA community to collect feedback.
-> I got two young kids, did this over a weekend to get this started so be nice:) 
 
 Adding IOTA button to existing websites should be simple and easy to implement. It should work without registration and ideally can be implemented by anyone (even those without coding experience). This is what IOTA button trying to do. 
 
