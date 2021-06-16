@@ -130,7 +130,6 @@
 
       background-color: #fff;
       background-clip: padding-box;
-      height: 610px;
       box-shadow: 0 16px 16px rgb(108 114 156 / 7%), 0 3px 9px rgb(108 114 156 / 12%), 0 9px 8px rgb(94 100 135 / 10%);
     }
 
@@ -152,7 +151,7 @@
     .close {
       @apply block absolute cursor-pointer text-center top-0;
   
-      color: grey;
+      color: white;
       right: -90px;
     }
 

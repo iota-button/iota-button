@@ -21,7 +21,8 @@ export class Awaiting {
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
         </div>
         <div class="text-gray-500 text-xs font-light mt-2 text-center">
-          Awaiting payment... (balance {this.amount})
+          Awaiting payment... 
+          {/* (balance {this.amount}) */}
         </div>
       </div>
     );

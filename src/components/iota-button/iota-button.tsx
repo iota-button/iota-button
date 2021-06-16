@@ -239,7 +239,7 @@ export class IotaButton {
             <div class='iota-button-overlay'>
               <div class='iota-button-modal-container'>
                 <div class='iota-button-modal'>
-                  {leftContent}
+                  {/* {leftContent} */}
 
                   { /* PAYMENT / Donation PROCESS */}
                   {content}
