@@ -166,6 +166,7 @@ export class IotaButton {
       return;
     }
     this.show = !this.show;
+    // TODO add class 'out' to iota-button-overlay-container when closing
   }
 
   private openTangleExplorer(url: string): void {
@@ -233,7 +234,7 @@ export class IotaButton {
 
         {/* Handling modal. */}
         {this.show ?
-          <div class='iota-button-overlay-container'>
+          <div class='iota-button-overlay-container animate'>
             <div class='iota-button-overlay-backdrop'></div>
             <div class='iota-button-overlay'>
               <div class='iota-button-modal-container'>
