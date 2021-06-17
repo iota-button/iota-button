@@ -1,5 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
-import { FireflyHelper } from '../../helpers/fireflyHelper';
+import { FireflyHelper } from '../../../helpers/fireflyHelper';
 import { toDataURL } from 'qrcode';
 
 @Component({

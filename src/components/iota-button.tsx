@@ -1,16 +1,16 @@
-import { UnitsHelper } from '../../helpers/unitsHelper';
 import { Component, Prop, h, State } from '@stencil/core';
-import { BUTTON_TYPES } from '../../enums';
-import { Config } from '../../config';
-import { CurrencyService } from '../../services/currencyService';
-import { ApiClient } from '../../services/apiClient';
-import { ISearchResponse } from '../../interfaces/api/chrysalis/ISearchResponse';
-import { ICurrencySettings } from '../../interfaces/services/ICurrencySettings';
-import { ServiceFactory } from '../../services/serviceFactory';
-import { SettingsService } from '../../services/settingsService';
-import { LocalStorageService } from '../../services/localStorageService';
+import { BUTTON_TYPES } from '../enums';
+import { Config } from '../config';
+import { CurrencyService } from '../services/currencyService';
+import { ApiClient } from '../services/apiClient';
+import { ISearchResponse } from '../interfaces/api/chrysalis/ISearchResponse';
+import { ICurrencySettings } from '../interfaces/services/ICurrencySettings';
+import { ServiceFactory } from '../services/serviceFactory';
+import { SettingsService } from '../services/settingsService';
+import { LocalStorageService } from '../services/localStorageService';
 import { find } from 'lodash-es';
-import { CurrencyHelper } from '../../helpers/currencyHelper';
+import { CurrencyHelper } from '../helpers/currencyHelper';
+import { fClient, openTangleExplorer } from '../helpers/clientHelper';
 
 @Component({
   tag: 'iota-button',
@@ -78,28 +78,6 @@ export class IotaButton {
     ServiceFactory.register('local-storage', () => new LocalStorageService());
   }
 
-  private get currencyService(): CurrencyService {
-    return ServiceFactory.get<CurrencyService>('currency');
-  }
-
-  private get apiClient(): ApiClient {
-    return ServiceFactory.get<ApiClient>('api-client');
-  }
-
-  private get currencyExchangeRate(): number {
-    if (this.currency) {
-      const cur: any = find(this.currencySettings?.currencies, { id: this.currency })!;
-      return cur.rate;
-    } else {
-      return 1;
-    }
-  }
-
-  private get usdExchangeRate(): number {
-    const cur: any = find(this.currencySettings?.currencies, { id: 'USD' })!;
-    return cur?.rate || 'n/a';
-  }
-
   protected validateInputs(): void {
     if (!this.address) {
       throw new Error('To initite the component you must provide an IOTA address.')
@@ -116,6 +94,8 @@ export class IotaButton {
     if (!this.label) {
       if (this.type === BUTTON_TYPES.BALANCE) {
         this.label = 'Balance';
+      } else if (this.type === BUTTON_TYPES.DONATION) {
+        this.label = 'Donate';
       } else if (this.type === BUTTON_TYPES.PAYMENT) {
         this.label = 'Pay';
       }
@@ -133,9 +113,18 @@ export class IotaButton {
     }, Config.EXCHANGE_RATE_INTERVAL_RESYNC);
   }
 
+  protected disconnectedCallback(): void {
+    if (this.addressSyncTimer) {
+      clearInterval(this.addressSyncTimer);
+    }
+    if (this.exchangeRateSyncTimer) {
+      clearInterval(this.exchangeRateSyncTimer);
+    }
+  }
+
   private async refreshCurrenciesAndExchangeRates(): Promise<void> {
     return new Promise((accept, reject) => {
-      this.currencyService.loadCurrencies((_avail, data?, err?) => {
+      CurrencyHelper.fCurrencyService().loadCurrencies((_avail, data?, err?) => {
         if (err) {
           reject('Failed to load currencies: ' + err);
           return;
@@ -147,9 +136,23 @@ export class IotaButton {
     });
   }
 
+  private get currencyExchangeRate(): number {
+    if (this.currency) {
+      const cur: any = find(this.currencySettings?.currencies, { id: this.currency })!;
+      return cur.rate;
+    } else {
+      return 1;
+    }
+  }
+
+  private get usdExchangeRate(): number {
+    const cur: any = find(this.currencySettings?.currencies, { id: 'USD' })!;
+    return cur?.rate || 'n/a';
+  }
+
   private async getLatestAddressBalance(): Promise<void> {
     try {
-      const result: ISearchResponse = await this.apiClient.search({
+      const result: ISearchResponse = await fClient().search({
         network: Config.API_NETWORK,
         query: this.address
       });
@@ -161,96 +164,64 @@ export class IotaButton {
   }
 
   private handleClick(): void {
-    // For balance we only show button ATM.
+    // Balance we simply redirect to tangle explorer.
     if (this.type === BUTTON_TYPES.BALANCE) {
       return;
     }
+
     this.show = !this.show;
-    // TODO add class 'out' to iota-button-overlay-container when closing
   }
 
-  private openTangleExplorer(url: string): void {
-    window.open('https://explorer.iota.org/mainnet/addr/' + url);
-  }
-
-  protected disconnectedCallback(): void {
-    if (this.addressSyncTimer) {
-      clearInterval(this.addressSyncTimer);
-    }
-    if (this.exchangeRateSyncTimer) {
-      clearInterval(this.exchangeRateSyncTimer);
-    }
-  }
-
-  private printAmount(): string {
-    if (this.currency) {
-      return this.currencyService.getSymbol(this.currency) + CurrencyHelper.formatLargeNumbers(this.amount.toString());
-    } else {
-      return UnitsHelper.formatBest(this.amount, 2);
-    }
-  }
-
-  private printBalanceAmount(): string {
-    if (isNaN(this.balance)) {
-      return '';
-    }
-    
-    if (this.currency) {
-      return this.currencyService.getSymbol(this.currency) + CurrencyHelper.printIotaBasedOnFx(this.balance, this.currencyExchangeRate);
-    } else {
-      return UnitsHelper.formatBest(this.balance, 2);
-    }
-  }
-
-  render() {
-    /* Handling which button to show. For now only Balance or Payment supported. */
-    let button: any;
-    if (this.type === BUTTON_TYPES.PAYMENT) {
-      button = <ibtn-button-payment  onClick={() => this.handleClick()}  label={this.label + ' ' + this.printAmount()}></ibtn-button-payment>;
-    } else {
-      button = <ibtn-button-balance  onClick={() => this.openTangleExplorer(this.address)}  label={this.label + ' ' + this.printBalanceAmount()}></ibtn-button-balance>;
-    }
-
+  private renderContent(): void {
     let content: string;
-    let leftContent: string;
-    // Only payment supported atm.
-    /* TODO Balance view */
-    /* TODO Coloured coin view */
     if (this.type === BUTTON_TYPES.PAYMENT) {
-      leftContent = (this.balance >= this.amount) ? '' : <ibtn-qr-payment class='summary' address={this.address} amount={this.amount}></ibtn-qr-payment>;
       content = <ibtn-payment-process class='content' 
                   currency={this.currency} address={this.address}
                   amount={this.amount} balance={this.balance} currencyExchangeRate={this.currencyExchangeRate} 
                   usdExchangeRate={this.usdExchangeRate}>
                 </ibtn-payment-process>;
+    } else if (this.type === BUTTON_TYPES.DONATION) {
+      content = <ibtn-donation-request class='content' 
+                  currency={this.currency} address={this.address}
+                  balance={this.balance} currencyExchangeRate={this.currencyExchangeRate} 
+                  usdExchangeRate={this.usdExchangeRate}>
+                </ibtn-donation-request>;
     } else {
-      leftContent = '';
       content = <p>Not supported yet</p>;
     }
 
     return (
-      <div>
-        {button}
-
-        {/* Handling modal. */}
-        {this.show ?
-          <div class='iota-button-overlay-container animate'>
-            <div class='iota-button-overlay-backdrop'></div>
-            <div class='iota-button-overlay'>
-              <div class='iota-button-modal-container'>
-                <div class='iota-button-modal'>
-                  {/* {leftContent} */}
-
-                  { /* PAYMENT / Donation PROCESS */}
-                  {content}
-                
-                  <ibtn-modal-close class='close' onClick={() => this.handleClick()}></ibtn-modal-close>
-                </div>
-              </div>
+      <div class={'ib-overlay-container animate'}>
+        <div class='ib-overlay-backdrop'></div>
+        <div class='ib-overlay'>
+          <div class='ib-modal-container'>
+            <div class='ib-modal'>
+              {content}
+              <ibtn-modal-close class='close' onClick={() => this.handleClick()}></ibtn-modal-close>
             </div>
           </div>
-          : ''}
+        </div>
       </div>
     );
+  }
+
+  render() {
+    if (this.show) {
+      return this.renderContent();
+    } else {
+      /* Handling which button to show. For now only Balance or Payment supported. */
+      let button: any;
+      if (this.type === BUTTON_TYPES.PAYMENT) {
+        button = <ibtn-button-payment  onClick={() => this.handleClick()}  label={this.label + 
+                ' ' + CurrencyHelper.printAmount(this.currency, this.amount)}></ibtn-button-payment>;
+      } else if (this.type === BUTTON_TYPES.DONATION) {
+        button = <ibtn-button-donation  onClick={() => this.handleClick()}  label={this.label}></ibtn-button-donation>;
+      } else {
+        button = <ibtn-button-balance  onClick={() => openTangleExplorer(this.address)}  
+                label={this.label + ' ' + CurrencyHelper.printBalanceAmount(this.balance, this.currency, this.currencyExchangeRate)}></ibtn-button-balance>;
+      }
+
+      return (<host>{button}</host>);
+    }
   }
 }

@@ -19,11 +19,51 @@ export namespace Components {
          */
         "label": string;
     }
+    interface IbtnButtonDonation {
+        /**
+          * Button label.
+         */
+        "label": string;
+    }
     interface IbtnButtonPayment {
         /**
           * Button label.
          */
         "label": string;
+    }
+    interface IbtnDonationRequest {
+        /**
+          * The IOTA address to send funds to.
+         */
+        "address": string;
+        /**
+          * Define button label text. Defaults to 'Pay with IOTA'
+         */
+        "amount": number;
+        /**
+          * Current address balance.
+         */
+        "balance": number;
+        /**
+          * Real currency code. Error is thrown if currency not supported. Undefined means MIOTA
+         */
+        "currency": string;
+        /**
+          * Currency exchange rate.
+         */
+        "currencyExchangeRate": number;
+        /**
+          * Customer Name
+         */
+        "customerName": string;
+        /**
+          * Default amounts
+         */
+        "defAmounts": number[];
+        /**
+          * USD Exchange rate
+         */
+        "usdExchangeRate": number;
     }
     interface IbtnModalClose {
     }
@@ -103,11 +143,23 @@ declare global {
         prototype: HTMLIbtnButtonBalanceElement;
         new (): HTMLIbtnButtonBalanceElement;
     };
+    interface HTMLIbtnButtonDonationElement extends Components.IbtnButtonDonation, HTMLStencilElement {
+    }
+    var HTMLIbtnButtonDonationElement: {
+        prototype: HTMLIbtnButtonDonationElement;
+        new (): HTMLIbtnButtonDonationElement;
+    };
     interface HTMLIbtnButtonPaymentElement extends Components.IbtnButtonPayment, HTMLStencilElement {
     }
     var HTMLIbtnButtonPaymentElement: {
         prototype: HTMLIbtnButtonPaymentElement;
         new (): HTMLIbtnButtonPaymentElement;
+    };
+    interface HTMLIbtnDonationRequestElement extends Components.IbtnDonationRequest, HTMLStencilElement {
+    }
+    var HTMLIbtnDonationRequestElement: {
+        prototype: HTMLIbtnDonationRequestElement;
+        new (): HTMLIbtnDonationRequestElement;
     };
     interface HTMLIbtnModalCloseElement extends Components.IbtnModalClose, HTMLStencilElement {
     }
@@ -136,7 +188,9 @@ declare global {
     interface HTMLElementTagNameMap {
         "ibtn-awaiting": HTMLIbtnAwaitingElement;
         "ibtn-button-balance": HTMLIbtnButtonBalanceElement;
+        "ibtn-button-donation": HTMLIbtnButtonDonationElement;
         "ibtn-button-payment": HTMLIbtnButtonPaymentElement;
+        "ibtn-donation-request": HTMLIbtnDonationRequestElement;
         "ibtn-modal-close": HTMLIbtnModalCloseElement;
         "ibtn-payment-process": HTMLIbtnPaymentProcessElement;
         "ibtn-qr-payment": HTMLIbtnQrPaymentElement;
@@ -156,11 +210,51 @@ declare namespace LocalJSX {
          */
         "label"?: string;
     }
+    interface IbtnButtonDonation {
+        /**
+          * Button label.
+         */
+        "label"?: string;
+    }
     interface IbtnButtonPayment {
         /**
           * Button label.
          */
         "label"?: string;
+    }
+    interface IbtnDonationRequest {
+        /**
+          * The IOTA address to send funds to.
+         */
+        "address"?: string;
+        /**
+          * Define button label text. Defaults to 'Pay with IOTA'
+         */
+        "amount"?: number;
+        /**
+          * Current address balance.
+         */
+        "balance"?: number;
+        /**
+          * Real currency code. Error is thrown if currency not supported. Undefined means MIOTA
+         */
+        "currency"?: string;
+        /**
+          * Currency exchange rate.
+         */
+        "currencyExchangeRate"?: number;
+        /**
+          * Customer Name
+         */
+        "customerName"?: string;
+        /**
+          * Default amounts
+         */
+        "defAmounts"?: number[];
+        /**
+          * USD Exchange rate
+         */
+        "usdExchangeRate"?: number;
     }
     interface IbtnModalClose {
     }
@@ -229,7 +323,9 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "ibtn-awaiting": IbtnAwaiting;
         "ibtn-button-balance": IbtnButtonBalance;
+        "ibtn-button-donation": IbtnButtonDonation;
         "ibtn-button-payment": IbtnButtonPayment;
+        "ibtn-donation-request": IbtnDonationRequest;
         "ibtn-modal-close": IbtnModalClose;
         "ibtn-payment-process": IbtnPaymentProcess;
         "ibtn-qr-payment": IbtnQrPayment;
@@ -242,7 +338,9 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "ibtn-awaiting": LocalJSX.IbtnAwaiting & JSXBase.HTMLAttributes<HTMLIbtnAwaitingElement>;
             "ibtn-button-balance": LocalJSX.IbtnButtonBalance & JSXBase.HTMLAttributes<HTMLIbtnButtonBalanceElement>;
+            "ibtn-button-donation": LocalJSX.IbtnButtonDonation & JSXBase.HTMLAttributes<HTMLIbtnButtonDonationElement>;
             "ibtn-button-payment": LocalJSX.IbtnButtonPayment & JSXBase.HTMLAttributes<HTMLIbtnButtonPaymentElement>;
+            "ibtn-donation-request": LocalJSX.IbtnDonationRequest & JSXBase.HTMLAttributes<HTMLIbtnDonationRequestElement>;
             "ibtn-modal-close": LocalJSX.IbtnModalClose & JSXBase.HTMLAttributes<HTMLIbtnModalCloseElement>;
             "ibtn-payment-process": LocalJSX.IbtnPaymentProcess & JSXBase.HTMLAttributes<HTMLIbtnPaymentProcessElement>;
             "ibtn-qr-payment": LocalJSX.IbtnQrPayment & JSXBase.HTMLAttributes<HTMLIbtnQrPaymentElement>;

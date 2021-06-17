@@ -2,11 +2,11 @@
   @apply block;
 }
 
-.iota-button-global-scrollblock {
+.ib-global-scrollblock {
     @apply left-0 top-0 fixed w-full overflow-y-scroll;
 }
 
-.iota-button-overlay-container {
+.ib-overlay-container {
     @apply pointer-events-none top-0 left-0 w-full h-full fixed;
     z-index: 1000;
 
@@ -14,21 +14,21 @@
 
     &.animate {
       transform:scale(1);
-      .iota-button-overlay-backdrop {
+      .ib-overlay-backdrop {
         background:rgba(0,0,0,.0);
         animation: fadeIn .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
       }
-        .iota-button-modal {
+        .ib-modal {
           transform:translateX(-1500px);
           animation: roadRunnerIn .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
         }
       
       &.out {
         animation: quickScaleDown 0s .5s linear forwards;
-        .iota-button-overlay-backdrop {
+        .ib-overlay-backdrop {
           animation: fadeOut .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
         }
-          .iota-button-modal {
+          .ib-modal {
             animation: roadRunnerOut .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
           }
         
@@ -93,7 +93,7 @@
   }
 }
 
-.iota-button-overlay-backdrop {
+.ib-overlay-backdrop {
     @apply fixed right-0 bottom-0 left-0 top-0 h-full opacity-100 pointer-events-auto;
   
     z-index: 1000;
@@ -103,18 +103,18 @@
     transition: backdrop-filter 0.2s;
 }
 
-.iota-button-overlay {
+.ib-overlay {
     @apply static pointer-events-auto;
     z-index: 1000;
 }
 
-.iota-button-modal-container {
+.ib-modal-container {
     @apply fixed right-0 bottom-0 left-0 top-0 overflow-auto;
     z-index: 1000;
     outline: 0;
 }
 
-.iota-button-modal {
+.ib-modal {
     @apply box-border leading-normal list-none relative;
     
     width: 500px;
