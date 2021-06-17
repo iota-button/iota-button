@@ -125,6 +125,17 @@
     margin: 0 auto;
     font-size: 13px;
 
+    @media only screen and (max-width: 640px) {
+      top: 24px;
+      margin: 0;
+      left: 24px;
+      right: 24px;
+      bottom: 0;
+      position: absolute;
+      max-width: none;
+      width: auto;
+    }
+
     .content {
       @apply relative border-0 pointer-events-auto rounded-lg flex flex-col items-center;
 
@@ -153,6 +164,17 @@
   
       color: white;
       right: -90px;
+
+      @media only screen and (max-width: 640px) {
+        right: 8px;
+        top: 8px;
+        color: black;
+
+        .close-text {
+          display: none;
+        }
+      }
+
     }
 
     .button {
