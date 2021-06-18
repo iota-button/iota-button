@@ -21,7 +21,7 @@
         "Noto Color Emoji";
     }
 
-    /* TODO ADAM active only when modal displayed */
+    /* TODO active only when modal displayed */
     /* .ib-global-scrollblock {
       position: fixed;
       width: 100%;
@@ -74,7 +74,7 @@
         <ul class="list-reset lg:flex justify-end flex-1 items-center">
         </ul>
         
-        <iota-button address="iota1qqnfhjeq0kzv9clem2r23hwte458teds8eucem75syn3zsrvts2xzp6gd8s"
+        <iota-button address="iota1qzk5q5x5qjtxzq4hxwfqhl96g3kwt9yyesskkne5uq82932upy7xkjk8m8y"
           merchant="IOTA Button Foundation" label="Donate" type="donation"></iota-button>
 
         <form action="//github.com/iota-button/iota-button">
@@ -93,7 +93,7 @@
         Accept payments and donations with IOTA in seconds.
       </h1>
       <p class="leading-tight text-gray-600 md:text-sm lg:text-lg mb-8 text-justify font-sans max-w-6xl">
-        IOTA Button can be used to accept payments, reviews, donations or just show balance in your wallet. Simple
+        IOTA Button can be used to accept payments, donations or just show balance in your wallet. Simple
         button can
         be embeded on any website with minimal coding.
       </p>
@@ -195,10 +195,10 @@
               <span class="text-gray-600">// get paid</span>
               &lt;iota-button address="iota1..." amount="500000000"&gt;&lt;/iota-button&gt; <br />
               &lt;iota-button address="iota1..." amount="50" currency="USD"&gt;&lt;/iota-button&gt;<br />
-              <span class="text-gray-600">// show balance</span>
-              &lt;iota-button address="iota1..." type="balance"&gt;&lt;/iota-button&gt;<br />
-              &lt;iota-button address="iota1..." currency="EUR" label="Donated"
-              type="balance"&gt;&lt;/iota-button&gt;
+              <span class="text-gray-600">// get donation</span>
+              <!-- &lt;iota-button address="iota1..." type="balance"&gt;&lt;/iota-button&gt;<br /> -->
+              &lt;iota-button address="iota1..." currency="EUR" label="Donate" merchant="GoodGuys"
+              type="donation"&gt;&lt;/iota-button&gt;
           </pre>
           </div>
         </div>
@@ -223,7 +223,7 @@
             About
           </h3>
           <p class="text-gray-600 mb-8">
-            IOTA Button can be used to accept payments, reviews, donations or just show balance in your wallet. Simple
+            IOTA Button can be used to accept payments, donations or just show balance in your wallet. Simple
             button can
             be embeded on any website with minimal coding.
             It's completely open source, client based JavaScript code so you're in control. This is a firt prototype to
@@ -319,269 +319,7 @@
       </div>
     </div>
   </footer>
-  <!-- 
-<body class="gradient leading-relaxed tracking-wide flex flex-col">
-  <nav id="header" class="w-full z-30 top-0 text-white py-1 lg:py-6">
-    <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-2 lg:py-6">
-      <div class="pl-4 flex items-center">
-        <a class="text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
-          <svg class="h-6 w-6 inline-block fill-current text-yellow-700" xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20">
-            <path d="M13 8V0L8.11 5.87 3 12h4v8L17 8h-4z" />
-          </svg>
-          IOTA BUTTON
-        </a>
-      </div>
-
-      <div class="block lg:hidden pr-4">
-        <button id="nav-toggle"
-          class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-green-500 appearance-none focus:outline-none">
-          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-          </svg>
-        </button>
-      </div>
-
-      <div
-        class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 text-black p-4 lg:p-0 z-20"
-        id="nav-content">
-        <ul class="list-reset lg:flex justify-end flex-1 items-center">
-        
-        </ul>
-        <iota-button address="iota1qqnfhjeq0kzv9clem2r23hwte458teds8eucem75syn3zsrvts2xzp6gd8s" merchant="IOTA Button Foundation" 
-        label="Donate" type="donation"></iota-button>
-
-        <form action="//github.com/iota-button/iota-button">
-          <button id="navAction" type="submit"
-            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-            View On Github
-          </button>
-        </form>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container mx-auto h-screen">
-    <div class="text-center px-3 lg:px-0">
-      <h1 class="my-4 text-2xl md:text-3xl lg:text-4xl font-black leading-tight">
-        No fees, your terms, full privacy.
-      </h1>
-      <p class="leading-normal text-gray-800 text-base md:text-xl lg:text-2xl mb-8">
-      </p>
-    </div>
-
-    <div class="flex items-center w-full mx-auto content-end">
-      <div class="browser-mockup flex flex-1 m-6 md:px-0 md:m-12 bg-white w-1/2 rounded shadow-xl">
-
-        Necessary JS module to be loaded within your app 
-        <script type="module" src="/build/iota-button.esm.js"></script>
-        <script nomodule src="/build/iota-button.js"></script>
-
-        <div class="container mb-2 flex mx-auto w-full items-center justify-center">
-          <br /><br />
-          <ul class="flex flex-col p-16">
-            <li class="border-gray-400 flex flex-row mb-4">
-              <div class="flex-1 pl-1 mr-16">
-                <div class="font-medium">
-                  Get paid 500 Mi
-                </div>
-              </div>
-              <iota-button address="iota1qqnfhjeq0kzv9clem2r23hwte458teds8eucem75syn3zsrvts2xzp6gd8s"
-                amount="500000000"></iota-button>
-            </li>
-            <li class="border-gray-400 flex flex-row mb-4">
-              <div class="flex-1 pl-1 mr-16">
-                <div class="font-medium">
-                  Get paid USD 50 <span class="text-xs">(exchange rate refreshes every minute)</span>
-                </div>
-                <span class="text-xs font-extralight">
-                </span>
-              </div>
-              <iota-button address="iota1qqnfhjeq0kzv9clem2r23hwte458teds8eucem75syn3zsrvts2xzp6gd8s" amount="50"
-                currency="USD"></iota-button>
-            </li>
-            <li class="border-gray-400 flex flex-row mb-4">
-               <div class="flex-1 pl-1 mr-16">
-                <div class="font-medium">
-                  Donate CAD's
-                </div>
-                <span class="text-xs font-extralight">
-
-                </span>
-              </div>
-              <iota-button address="iota1qpec4rvuxj4am5q3560k273amlumfged2mvhuhq4cazxjr6lvqxguye5wjh" currency="CAD"
-                label="Donate" type="donation"></iota-button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <section class="bg-white border-b py-12 ">
-    <div class="container mx-auto flex flex-wrap items-center justify-between pb-12">
-      <div class="w-full mb-4">
-        <div class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
-      </div>
-
-      <div class="lg:grid gap-24 grid-cols-2">
-        <div class="max-w-xl">
-          <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">
-            Get Started
-          </h3>
-          <p class="text-gray-600 mb-8">
-            Add scripts to your html
-          </p>
-        </div>
-        <div class="text-center">
-          <div class="rounded-lg bg-black text-white p-8 md:p-16 mx-auto text-left md:max-w-xl md:w-160 lg:mt-12">
-            <pre class="overflow-auto whitespace-pre-line h-50">
-                &lt;script type="module" src="//iota-button.org/build/iota-button.esm.js"&gt;&lt;/script&gt; <br />
-                &lt;script nomodule src="//iota-button.org/build/iota-button.js"&gt;&lt;/script&gt;
-            </pre>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:grid gap-24 grid-cols-2">
-        <div class="max-w-xl">
-          <p class="text-gray-600 mb-8">
-            Add following HTML
-          </p>
-        </div>
-        <div class="text-center">
-          <div class="rounded-lg bg-black text-white p-8 md:p-16 mx-auto text-left md:max-w-xl md:w-160 lg:mt-12">
-            <pre class="overflow-auto whitespace-pre-line h-100">
-              <span class="text-gray-600">// get paid</span>
-              &lt;iota-button address="iota1..." amount="500000000"&gt;&lt;/iota-button&gt; <br />
-              &lt;iota-button address="iota1..." amount="50" currency="USD"&gt;&lt;/iota-button&gt;<br />
-              <span class="text-gray-600">// show balance</span>
-              &lt;iota-button address="iota1..." type="balance"&gt;&lt;/iota-button&gt;<br />
-              &lt;iota-button address="iota1..." currency="EUR" label="Donated"
-              type="balance"&gt;&lt;/iota-button&gt;
-          </pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-gray-100 border-b py-8">
-    <div class="container max-w-5xl mx-auto m-8">
-     
-      <div class="w-full mb-4">
-        <div class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
-      </div>
-
-      <div class="flex flex-wrap">
-        <div class="w-5/6 p-6">
-          <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">
-            About
-          </h3>
-          <p class="text-gray-600 mb-8">
-            IOTA Button can be used to accept payments, reviews, donations or just show balance in your wallet. Simple button can
-            be embeded on any website with minimal coding.
-            It's completely open source, client based JavaScript code so you're in control. This is a firt prototype to
-            see if there is an interest.
-            <br /><br />
-            Please get involved on Github if you have project where you want to use it or have ideas on how to expand
-            this project.
-          </p>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap flex-col-reverse sm:flex-row">
-        <div class="w-full p-6 mt-6">
-          <div class="align-middle">
-            <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">
-              Roadmap
-            </h3>
-            <div class="text-gray-600 mb-8">
-              <p>See our enhancements/ideas/suggestions in Github: </p>
-              <a class="text-orange-500 underline" href="//github.com/iota-button/iota-button/labels/enhancement">IOTA Button</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="bg-white ">
-    <div class="container mx-auto mt-8 px-8">
-      <div class="w-full flex flex-col md:flex-row py-6">
-        <div class="flex-1 mb-6">
-          <a class="text-orange-600 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
-            href="https://iota-button.org">
-            <svg class="h-6 w-6 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M13 8V0L8.11 5.87 3 12h4v8L17 8h-4z" />
-            </svg>
-            IOTA BUTTON
-          </a>
-        </div>
-
-        <div class="flex-1">
-          <p class="uppercase font-extrabold text-gray-500 md:mb-6">Legal</p>
-          <ul class="list-reset mb-6">
-            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="//github.com/iota-button/iota-button/blob/main/LICENSE"
-                class="font-light no-underline hover:underline text-gray-800 hover:text-orange-500">Terms</a>
-            </li>
-            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="privacy.html"
-                class="font-light no-underline hover:underline text-gray-800 hover:text-orange-500">Privacy</a>
-            </li>
-          </ul>
-        </div>
-        <div class="flex-1">
-          <p class="uppercase font-extrabold text-gray-500 md:mb-6">Social</p>
-          <ul class="list-reset mb-6">
-            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://twitter.com/adam_unchained"
-                class="font-light no-underline hover:underline text-gray-800 hover:text-orange-500">Twitter</a>
-            </li>
-          </ul>
-        </div>
-        <div class="flex-1">
-          <p class="uppercase font-extrabold text-gray-500 md:mb-6">
-            IOTA Links
-          </p>
-          <ul class="list-reset mb-6">
-            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://www.iota.org"
-                class="font-light no-underline hover:underline text-gray-800 hover:text-orange-500">Official Site</a>
-            </li>
-            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://explorer.iota.org"
-                class="font-light no-underline hover:underline text-gray-800 hover:text-orange-500">Tangle Explorer</a>
-            </li>
-            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://discord.iota.org"
-                class="font-light no-underline hover:underline text-gray-800 hover:text-orange-500">IOTA Discord</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex items-center justify-between my-4">
-      <p class="text-blue-500"></p>
-      <p class="inline-flex text-blue-500 px-2 pt-6">Built with
-        <svg fill="#e53e3e" viewBox="0 0 24 24" class="w-5 h-5 mx-1 pt-px text-red-600" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg> iota1qqnfhjeq0kzv9clem2r23hwte458teds8eucem75syn3zsrvts2xzp6gd8s
-      </p>
-      <div class="flex items-center">
-      </div>
-    </div>
-  </footer> -->
-
   <script>
-    /*Toggle dropdown list*/
-    /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
-
     var navMenuDiv = document.getElementById("nav-content");
     var navMenu = document.getElementById("nav-toggle");
 

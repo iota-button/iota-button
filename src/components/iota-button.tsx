@@ -285,8 +285,7 @@ export class IotaButton {
     /* Handling which button to show. For now only Balance or Payment supported. */
     let button: any;
     if (this.type === BUTTON_TYPES.PAYMENT) {
-      button = <ibtn-button-payment disabled={this.show} onClick={() => this.handleClick()}  label={this.label + 
-              ' ' + CurrencyHelper.printAmount(this.currency, this.amount)}></ibtn-button-payment>;
+      button = <ibtn-button-payment disabled={this.show} onClick={() => this.handleClick()}  label={this.label}></ibtn-button-payment>;
     } else if (this.type === BUTTON_TYPES.DONATION) {
       button = <ibtn-button-donation disabled={this.show} onClick={() => this.handleClick()}  label={this.label}></ibtn-button-donation>;
     } else {

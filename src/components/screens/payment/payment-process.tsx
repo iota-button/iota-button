@@ -65,6 +65,17 @@ export class PaymentProcess {
     )
   }
 
+  private tempWarningDueFireflyIssue(): void {
+    // Unable to pass address/amount into Firefly. Waiting for: https://github.com/iotaledger/firefly/pull/773
+    setTimeout(() => {
+      prompt(
+        'Once Firefly fixes: https://github.com/iotaledger/firefly/pull/773 this will be automated. For now, please enter values manually.\n\n---\n' +
+        'Amount: ' + UnitsHelper.formatUnits(this.getAmountForWalet(), 'Mi') + '\n' + 
+        'Address: ', this.address
+      );
+    }, 1000);
+  }
+
   render() {
     return (
       <div class='font-mono w-full'>
@@ -96,7 +107,8 @@ export class PaymentProcess {
             <div class='text-lg'>Pay with...</div>
             <div class='flex space-x-3 mb-4 text-sm font-medium'>
               <div class='flex-auto flex space-x-3'>
-                <a class='cursor-pointer no-underline w-full flex items-center justify-center text-lg rounded-md bg-blue-600 text-white h-12 hover:bg-blue-800'
+                <a class='cursor-pointer no-underline w-full flex items-center justify-center text-lg rounded-md bg-blue-600 text-white h-12 hover:bg-blue-800' 
+                  onClick={() => this.tempWarningDueFireflyIssue()}
                   href={FireflyHelper.getPayUrl(this.address, this.getAmountForWalet())}>Firefly wallet</a>
               </div>
             </div>

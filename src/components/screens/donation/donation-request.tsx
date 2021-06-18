@@ -55,7 +55,7 @@ export class DonationRequest {
   /**
    * Default amounts
    */
-  @State() defAmounts: number[] = [1, 5, 10, 15, 50];
+  @State() defAmounts: number[] = [1, 5, 10, 50];
 
   /*
    * Show in foreign currency
