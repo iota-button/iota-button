@@ -25,6 +25,7 @@
   "dependencies": {
     "@iota/iota.js": "^1.5.0",
     "@stencil/core": "^2.0.1",
+    "dayjs": "1.10.5",
     "lodash-es": "^4.17.21",
     "qrcode": "^1.4.4"
   },

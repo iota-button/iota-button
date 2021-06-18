@@ -1,0 +1,186 @@
+:host {
+  @apply block;
+}
+
+.ib-global-scrollblock {
+    @apply left-0 top-0 fixed w-full overflow-y-scroll;
+}
+
+.ib-overlay-container {
+    @apply pointer-events-none top-0 left-0 w-full h-full fixed;
+    z-index: 1000;
+
+    transform:scale(0);
+
+    &.animate {
+      transform:scale(1);
+      .ib-overlay-backdrop {
+        background:rgba(0,0,0,.0);
+        animation: fadeIn .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+      }
+        .ib-modal {
+          transform:translateX(-1500px);
+          animation: roadRunnerIn .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+        }
+      
+      &.out {
+        animation: quickScaleDown 0s .5s linear forwards;
+        .ib-overlay-backdrop {
+          animation: fadeOut .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+        }
+          .ib-modal {
+            animation: roadRunnerOut .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+          }
+        
+      }
+    }
+
+}
+
+@keyframes fadeIn {
+  0% {
+    background:rgba(0,0,0,.0);
+    backdrop-filter: blur(10px) opacity(0);
+  }
+  100% {
+    background:rgba(0,0,0,.7);
+    backdrop-filter: blur(10px) opacity(.9);
+  }
+}
+
+@keyframes quickScaleDown {
+  0% {
+    transform:scale(1);
+  }
+  99.9% {
+    transform:scale(1);
+  }
+  100% {
+    transform:scale(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    background:rgba(0,0,0,.7);
+  }
+  100% {
+    background:rgba(0,0,0,.0);
+  }
+}
+
+@keyframes roadRunnerIn {
+  0% {
+    transform:translateX(-1500px) skewX(30deg) scaleX(1.3);
+  }
+  70% {
+    transform:translateX(30px) skewX(0deg) scaleX(.9);
+  }
+  100% {
+    transform:translateX(0px) skewX(0deg) scaleX(1);
+  }
+}
+
+@keyframes roadRunnerOut {
+  0% {
+    transform:translateX(0px) skewX(0deg) scaleX(1);
+  }
+  30% {
+    transform:translateX(-30px) skewX(-5deg) scaleX(.9);
+  }
+  100% {
+    transform:translateX(1500px) skewX(30deg) scaleX(1.3);
+  }
+}
+
+.ib-overlay-backdrop {
+    @apply fixed right-0 bottom-0 left-0 top-0 h-full opacity-100 pointer-events-auto;
+  
+    z-index: 1000;
+    background: rgba(0,0,0,.8);
+    backdrop-filter: blur(10px) opacity(0);
+    -webkit-backdrop-filter: blur(10px);
+    transition: backdrop-filter 0.2s;
+}
+
+.ib-overlay {
+    @apply static pointer-events-auto;
+    z-index: 1000;
+}
+
+.ib-modal-container {
+    @apply fixed right-0 bottom-0 left-0 top-0 overflow-auto;
+    z-index: 1000;
+    outline: 0;
+}
+
+.ib-modal {
+    @apply box-border leading-normal list-none relative;
+    
+    width: 500px;
+    padding: 0 0 24px;
+    color: rgba(0,0,0,.65);
+    top: 100px;
+    max-width: calc(100vw - 32px);
+    margin: 0 auto;
+    font-size: 13px;
+
+    @media only screen and (max-width: 640px) {
+      top: 24px;
+      margin: 0;
+      left: 24px;
+      right: 24px;
+      bottom: 0;
+      position: absolute;
+      max-width: none;
+      width: auto;
+    }
+
+    .content {
+      @apply relative border-0 pointer-events-auto rounded-lg flex flex-col items-center;
+
+      background-color: #fff;
+      background-clip: padding-box;
+      box-shadow: 0 16px 16px rgb(108 114 156 / 7%), 0 3px 9px rgb(108 114 156 / 12%), 0 9px 8px rgb(94 100 135 / 10%);
+    }
+
+    .summary {
+      @apply absolute text-left border-0 pointer-events-auto rounded-lg;
+      
+      top: 20px;
+      left: -230px;
+      height: 500px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: normal;
+      align-items: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 16px 16px rgb(108 114 156 / 7%), 0 3px 9px rgb(108 114 156 / 12%), 0 9px 8px rgb(94 100 135 / 10%);
+    
+    }
+    .close {
+      @apply block absolute cursor-pointer text-center top-0;
+  
+      color: white;
+      right: -90px;
+
+      @media only screen and (max-width: 640px) {
+        right: 8px;
+        top: 8px;
+        color: black;
+
+        .close-text {
+          display: none;
+        }
+      }
+
+    }
+
+    .button {
+      @apply rounded text-white m-4 p-4 no-underline;
+
+      background-color: #4261ff;
+      width: 50%;
+    }
+}

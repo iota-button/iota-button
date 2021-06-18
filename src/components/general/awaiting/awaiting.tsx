@@ -13,16 +13,19 @@ export class Awaiting {
 
   render() {
     return (
-      <div class="bg-white border py-2 px-5 rounded-lg flex items-center flex-col">
+      <div class="bg-white border py-2 flex items-center flex-col">
+        <div class='text-lg self-start'>Listening to payments...
+        </div>
+        {/* <span class="text-sm self-start">(balance {this.amount})</span> */}
+
+
         <div class="pending-dots block relative w-20 h-5 mt-2">
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
         </div>
-        <div class="text-gray-500 text-xs font-light mt-2 text-center">
-          Awaiting payment... (balance {this.amount})
-        </div>
+
       </div>
     );
   }
