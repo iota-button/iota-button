@@ -5,6 +5,10 @@ export function fClient(): ApiClient {
   return ServiceFactory.get<ApiClient>('api-client');
 }
 
-export function openTangleExplorer(url: string): void {
-  window.open('https://explorer.iota.org/mainnet/addr/' + url);
+export function openTangleExplorer(params: any): void {
+  window.open(tangleExplorerUrl(params));
+}
+
+export function tangleExplorerUrl(params: any): string {
+  return 'https://explorer.iota.org/mainnet/addr/' + params;
 }

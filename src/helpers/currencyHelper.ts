@@ -23,23 +23,23 @@ export class CurrencyHelper {
       return Math.ceil(amount * exchangeRate * 1000000);
     }
 
-    public static printIotaAmount(amount: number, currency: string, exchangeRate: number): string {
+    public static printIotaAmount(amount: number, currency: string, exchangeRate: number, decimalPoint: number = 2): string {
       if (currency) {
         return UnitsHelper.formatBest(CurrencyHelper.convertFiatToIota(amount, exchangeRate), 2);
       } else {
-        return UnitsHelper.formatBest(amount, 2);
+        return UnitsHelper.formatBest(amount, decimalPoint);
       }
     }
 
-    public static printAmount(currency: string, amount: number): string {
+    public static printAmount(currency: string, amount: number, decimalPoint: number = 2): string {
         if (currency) {
           return CurrencyHelper.fCurrencyService().getSymbol(currency) + CurrencyHelper.formatLargeNumbers(amount.toString());
         } else {
-          return UnitsHelper.formatBest(amount, 2);
+          return UnitsHelper.formatBest(amount, decimalPoint);
         }
     }
     
-    public static printBalanceAmount(balance: number, currency: string, exchangeRate: number): string {
+    public static printBalanceAmount(balance: number, currency: string, exchangeRate: number, decimalPoint: number = 2): string {
         if (isNaN(balance)) {
           return '';
         }
@@ -47,7 +47,7 @@ export class CurrencyHelper {
         if (currency) {
           return CurrencyHelper.fCurrencyService().getSymbol(currency) + CurrencyHelper.printIotaBasedOnFx(balance, exchangeRate);
         } else {
-          return UnitsHelper.formatBest(balance, 2);
+          return UnitsHelper.formatBest(balance, decimalPoint);
         }
     }
 }

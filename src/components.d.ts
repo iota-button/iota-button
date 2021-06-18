@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { BalanceHistory } from "./components/common.interfaces";
 import { BUTTON_TYPES } from "./enums";
 export namespace Components {
     interface IbtnAwaiting {
@@ -15,17 +16,29 @@ export namespace Components {
     }
     interface IbtnButtonBalance {
         /**
+          * Button disabled.
+         */
+        "disabled": boolean;
+        /**
           * Button label.
          */
         "label": string;
     }
     interface IbtnButtonDonation {
         /**
+          * Button disabled.
+         */
+        "disabled": boolean;
+        /**
           * Button label.
          */
         "label": string;
     }
     interface IbtnButtonPayment {
+        /**
+          * Button disabled.
+         */
+        "disabled": boolean;
         /**
           * Button label.
          */
@@ -45,6 +58,10 @@ export namespace Components {
          */
         "balance": number;
         /**
+          * Current address balance.
+         */
+        "balanceHistory": BalanceHistory[];
+        /**
           * Real currency code. Error is thrown if currency not supported. Undefined means MIOTA
          */
         "currency": string;
@@ -53,13 +70,13 @@ export namespace Components {
          */
         "currencyExchangeRate": number;
         /**
-          * Customer Name
-         */
-        "customerName": string;
-        /**
           * Default amounts
          */
         "defAmounts": number[];
+        /**
+          * Merchant name
+         */
+        "merchant": string;
         /**
           * USD Exchange rate
          */
@@ -80,6 +97,10 @@ export namespace Components {
           * Current address balance.
          */
         "balance": number;
+        /**
+          * Current address balance.
+         */
+        "balanceHistory": BalanceHistory[];
         /**
           * Real currency code. Error is thrown if currency not supported. Undefined means MIOTA
          */
@@ -120,6 +141,10 @@ export namespace Components {
           * Define button label text. Defaults to 'Pay with IOTA'
          */
         "label": string;
+        /**
+          * Merchant name
+         */
+        "merchant": string;
         /**
           * Unique tran id to understand we received this particular payment. You must make sure you provide an unique ID. Otherwise, system might think that the payment was already finalised.
          */
@@ -206,17 +231,29 @@ declare namespace LocalJSX {
     }
     interface IbtnButtonBalance {
         /**
+          * Button disabled.
+         */
+        "disabled"?: boolean;
+        /**
           * Button label.
          */
         "label"?: string;
     }
     interface IbtnButtonDonation {
         /**
+          * Button disabled.
+         */
+        "disabled"?: boolean;
+        /**
           * Button label.
          */
         "label"?: string;
     }
     interface IbtnButtonPayment {
+        /**
+          * Button disabled.
+         */
+        "disabled"?: boolean;
         /**
           * Button label.
          */
@@ -236,6 +273,10 @@ declare namespace LocalJSX {
          */
         "balance"?: number;
         /**
+          * Current address balance.
+         */
+        "balanceHistory"?: BalanceHistory[];
+        /**
           * Real currency code. Error is thrown if currency not supported. Undefined means MIOTA
          */
         "currency"?: string;
@@ -244,13 +285,13 @@ declare namespace LocalJSX {
          */
         "currencyExchangeRate"?: number;
         /**
-          * Customer Name
-         */
-        "customerName"?: string;
-        /**
           * Default amounts
          */
         "defAmounts"?: number[];
+        /**
+          * Merchant name
+         */
+        "merchant"?: string;
         /**
           * USD Exchange rate
          */
@@ -271,6 +312,10 @@ declare namespace LocalJSX {
           * Current address balance.
          */
         "balance"?: number;
+        /**
+          * Current address balance.
+         */
+        "balanceHistory"?: BalanceHistory[];
         /**
           * Real currency code. Error is thrown if currency not supported. Undefined means MIOTA
          */
@@ -311,6 +356,10 @@ declare namespace LocalJSX {
           * Define button label text. Defaults to 'Pay with IOTA'
          */
         "label"?: string;
+        /**
+          * Merchant name
+         */
+        "merchant"?: string;
         /**
           * Unique tran id to understand we received this particular payment. You must make sure you provide an unique ID. Otherwise, system might think that the payment was already finalised.
          */

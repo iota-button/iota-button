@@ -8,9 +8,14 @@ import { ICurrencySettings } from '../interfaces/services/ICurrencySettings';
 import { ServiceFactory } from '../services/serviceFactory';
 import { SettingsService } from '../services/settingsService';
 import { LocalStorageService } from '../services/localStorageService';
-import { find } from 'lodash-es';
+import { find, orderBy } from 'lodash-es';
 import { CurrencyHelper } from '../helpers/currencyHelper';
 import { fClient, openTangleExplorer } from '../helpers/clientHelper';
+import { IOutputDetailsResponse } from '../interfaces/api/chrysalis/IOutputDetailsResponse';
+import { IMessageDetailsResponse } from '../interfaces/api/chrysalis/IMessageDetailsResponse';
+import { IMilestoneDetailsResponse } from '../interfaces/api/chrysalis/IMilestoneDetailsResponse';
+import { BalanceHistory } from './common.interfaces';
+import { IMilestoneResponse } from '@iota/iota.js';
 
 @Component({
   tag: 'iota-button',
@@ -39,6 +44,11 @@ export class IotaButton {
   @Prop() amount: number;
 
   /**
+   * Merchant name
+   */
+  @Prop() merchant: string;
+
+  /**
    * Real currency code. Error is thrown if currency not supported.
    * Undefined means MIOTA
    */
@@ -62,11 +72,17 @@ export class IotaButton {
   @State() balance: number;
 
   /**
+   * Current address balance.
+   */
+  @State() balanceHistory: BalanceHistory[] = [];
+
+  /**
    * Holds exchange rates.
    */
   @State() private currencySettings: ICurrencySettings;
 
   // Holds timer for setInterval that syncs address every so on.
+  private milestones: IMilestoneResponse[] = [];
   private addressSyncTimer: NodeJS.Timeout;
   private exchangeRateSyncTimer: NodeJS.Timeout;
 
@@ -101,10 +117,10 @@ export class IotaButton {
       }
     }
 
-    this.getLatestAddressBalance();
+    this.getLatestAddressBalance(true);
     this.addressSyncTimer = setInterval(() => {
-      this.getLatestAddressBalance();
-    }, Config.SYNC_ADDRESS_FREQUENCY);
+      this.getLatestAddressBalance(!this.show);
+    }, Config.SYNC_ADDRESS_FREQUENCY_LONG);
 
     this.refreshCurrenciesAndExchangeRates();
     this.exchangeRateSyncTimer = setInterval(() => {
@@ -150,14 +166,68 @@ export class IotaButton {
     return cur?.rate || 'n/a';
   }
 
-  private async getLatestAddressBalance(): Promise<void> {
+  /**
+   * Function to retrieve latest balance including the history.
+   * 
+   * TODO: In the future, we want to implement our own web-service that combines this into one request.
+   */
+  private async getLatestAddressBalance(balanceOnly: boolean = true): Promise<void> {
     try {
       const result: ISearchResponse = await fClient().search({
         network: Config.API_NETWORK,
         query: this.address
       });
-
       this.balance = result.address.balance;
+
+      // Get address details.
+      if (balanceOnly !== true && result?.addressOutputIds) {
+        for (let o of result.addressOutputIds) {
+          // Let's validate output is not yet within our array. If so, skip. Immutable beaty.
+          if (find(this.balanceHistory, { outputId: o})) {
+            return;
+          }
+
+          const details: IOutputDetailsResponse = await fClient().outputDetails({
+            network: Config.API_NETWORK,
+            outputId: o
+          });
+          if (details.output?.output?.amount > 0 || details.output?.output?.amount < 0) { 
+            // Now we need to get the message info as well.
+            const messageDetails: IMessageDetailsResponse = await fClient().messageDetails({
+              network: Config.API_NETWORK,
+              messageId: details.output.messageId
+            });
+            
+            // Must be refeferenced by milestone for us to add transaction.
+            if (messageDetails.metadata?.referencedByMilestoneIndex > 0) {
+              let milestoneDetails: IMilestoneResponse = find(this.milestones, { index: messageDetails.metadata?.referencedByMilestoneIndex});
+              if (!milestoneDetails) {
+                const milestoneDetailsResponse: IMilestoneDetailsResponse = await fClient().milestoneDetails({
+                  network: Config.API_NETWORK,
+                  milestoneIndex: messageDetails.metadata?.referencedByMilestoneIndex
+                });
+                milestoneDetails = milestoneDetailsResponse.milestone;
+              }
+
+              // Catch milestone details.
+              this.milestones.push(milestoneDetails);
+
+              // It might be already added due racing conditions.
+              if (find(this.balanceHistory, { outputId: o})) {
+                return;
+              }
+              
+              this.balanceHistory.push({
+                outputId: o,
+                address: details.output.output.address.address,
+                amount: details.output?.output?.amount,
+                timestamp: milestoneDetails.timestamp
+              });
+              this.balanceHistory = orderBy(this.balanceHistory, ['timestamp'], ['desc']);
+            }
+          }
+        }
+      }
     } catch (e) {
       console.error('Failed to load the address, ' + e);
     }
@@ -169,20 +239,26 @@ export class IotaButton {
       return;
     }
 
+    this.balanceHistory = [];
     this.show = !this.show;
+
+    // If show let's make sure we load the history asap.
+    if (this.show) {
+      this.getLatestAddressBalance(false);
+    }
   }
 
   private renderContent(): void {
     let content: string;
     if (this.type === BUTTON_TYPES.PAYMENT) {
       content = <ibtn-payment-process class='content' 
-                  currency={this.currency} address={this.address}
+                  currency={this.currency} address={this.address} balanceHistory={this.balanceHistory}
                   amount={this.amount} balance={this.balance} currencyExchangeRate={this.currencyExchangeRate} 
                   usdExchangeRate={this.usdExchangeRate}>
                 </ibtn-payment-process>;
     } else if (this.type === BUTTON_TYPES.DONATION) {
-      content = <ibtn-donation-request class='content' 
-                  currency={this.currency} address={this.address}
+      content = <ibtn-donation-request class='content' merchant={this.merchant}
+                  currency={this.currency} address={this.address} balanceHistory={this.balanceHistory}
                   balance={this.balance} currencyExchangeRate={this.currencyExchangeRate} 
                   usdExchangeRate={this.usdExchangeRate}>
                 </ibtn-donation-request>;
@@ -206,22 +282,23 @@ export class IotaButton {
   }
 
   render() {
-    if (this.show) {
-      return this.renderContent();
+    /* Handling which button to show. For now only Balance or Payment supported. */
+    let button: any;
+    if (this.type === BUTTON_TYPES.PAYMENT) {
+      button = <ibtn-button-payment disabled={this.show} onClick={() => this.handleClick()}  label={this.label + 
+              ' ' + CurrencyHelper.printAmount(this.currency, this.amount)}></ibtn-button-payment>;
+    } else if (this.type === BUTTON_TYPES.DONATION) {
+      button = <ibtn-button-donation disabled={this.show} onClick={() => this.handleClick()}  label={this.label}></ibtn-button-donation>;
     } else {
-      /* Handling which button to show. For now only Balance or Payment supported. */
-      let button: any;
-      if (this.type === BUTTON_TYPES.PAYMENT) {
-        button = <ibtn-button-payment  onClick={() => this.handleClick()}  label={this.label + 
-                ' ' + CurrencyHelper.printAmount(this.currency, this.amount)}></ibtn-button-payment>;
-      } else if (this.type === BUTTON_TYPES.DONATION) {
-        button = <ibtn-button-donation  onClick={() => this.handleClick()}  label={this.label}></ibtn-button-donation>;
-      } else {
-        button = <ibtn-button-balance  onClick={() => openTangleExplorer(this.address)}  
-                label={this.label + ' ' + CurrencyHelper.printBalanceAmount(this.balance, this.currency, this.currencyExchangeRate)}></ibtn-button-balance>;
-      }
-
-      return (<host>{button}</host>);
+      button = <ibtn-button-balance disabled={this.show} onClick={() => openTangleExplorer(this.address)}  
+              label={this.label + ' ' + CurrencyHelper.printBalanceAmount(this.balance, this.currency, this.currencyExchangeRate)}></ibtn-button-balance>;
     }
+
+    return (
+      <host>
+        {button}
+        {this.show ? this.renderContent() : ''}
+      </host>
+    );
   }
 }

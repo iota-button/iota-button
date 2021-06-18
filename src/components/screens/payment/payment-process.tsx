@@ -1,7 +1,10 @@
 import { Component, Prop, h } from '@stencil/core';
+import { tangleExplorerUrl } from '../../../helpers/clientHelper';
 import { CurrencyHelper } from '../../../helpers/currencyHelper';
+import { DateTimeHelper } from '../../../helpers/dateTimeHelper';
 import { FireflyHelper } from '../../../helpers/fireflyHelper';
 import { UnitsHelper } from '../../../helpers/unitsHelper';
+import { BalanceHistory } from '../../common.interfaces';
 
 @Component({
   tag: 'ibtn-payment-process',
@@ -31,6 +34,11 @@ export class PaymentProcess {
   @Prop() balance: number;
 
   /**
+   * Current address balance.
+   */
+  @Prop() balanceHistory: BalanceHistory[] = [];
+
+  /**
    * Currency exchange rate.
    */
   @Prop() currencyExchangeRate: number;
@@ -47,6 +55,15 @@ export class PaymentProcess {
     } else {
       return this.amount;
     }
+  }
+
+  public renderTransactionalHistory(line: BalanceHistory) {
+    return (
+      <span>
+        <br /><br />
+        <a href={tangleExplorerUrl(line.outputId)} target='new'>{DateTimeHelper.fromNow(line.timestamp)}</a> - {UnitsHelper.formatBest(line.amount, 2)}
+      </span>
+    )
   }
 
   render() {
@@ -88,6 +105,15 @@ export class PaymentProcess {
             <div class='my-6'>
               <ibtn-awaiting amount={UnitsHelper.formatBest(this.balance, 2)}></ibtn-awaiting>
             </div>
+
+            {this.balanceHistory.length > 0 ? 
+            <span>
+              History:
+              {this.balanceHistory.map((line) =>
+                  {return this.renderTransactionalHistory(line)}
+              )}
+            </span> : ''} 
+            
 
             <div class='text-sm text-gray-500 leading-3 pt-2'>
               <p>No fees, your terms, full privacy.</p>
