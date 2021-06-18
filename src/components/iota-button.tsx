@@ -120,7 +120,7 @@ export class IotaButton {
     this.getLatestAddressBalance(true);
     this.addressSyncTimer = setInterval(() => {
       this.getLatestAddressBalance(!this.show);
-    }, Config.SYNC_ADDRESS_FREQUENCY_LONG);
+    }, Config.SYNC_ADDRESS_FREQUENCY);
 
     this.refreshCurrenciesAndExchangeRates();
     this.exchangeRateSyncTimer = setInterval(() => {
@@ -169,7 +169,7 @@ export class IotaButton {
   /**
    * Function to retrieve latest balance including the history.
    * 
-   * TODO: In the future, we want to implement our own web-service that combines this into one request.
+   * TODO: In the future, we want to implement our own web-service that combines this into one request. This is just no efficent.
    */
   private async getLatestAddressBalance(balanceOnly: boolean = true): Promise<void> {
     try {

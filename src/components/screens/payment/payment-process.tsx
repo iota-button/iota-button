@@ -83,7 +83,7 @@ export class PaymentProcess {
                     </span>
                     : ''}
 
-                  <p class='text-sm'>(1 {this.currency} ≈ MIOTA {this.usdExchangeRate})</p>
+                  <p class='text-sm'>(1 {this.currency} ≈ MIOTA {this.currencyExchangeRate || this.usdExchangeRate})</p>
                 </span>
                 :
                 <span>

@@ -55,7 +55,7 @@ export class DonationRequest {
   /**
    * Default amounts
    */
-  @Prop() defAmounts: number[] = [1, 5, 10, 15, 50];
+  @State() defAmounts: number[] = [1, 5, 10, 15, 50];
 
   /*
    * Show in foreign currency
@@ -66,8 +66,6 @@ export class DonationRequest {
    * Process to payment step.
    */
   @State() paymentStep: boolean = false;
-
-  private inputValue: number;
 
   protected connectedCallback(): void {
     this.showForeignCurrency = !!this.currency;
@@ -104,8 +102,8 @@ export class DonationRequest {
   }
 
   public handleCustomDonation(event: Event): void {
+    // I'm not happy with below. Very messy.
     const am: number = parseFloat((event.target as HTMLInputElement).value);
-    this.inputValue = am;
     if (am > 0) {
       this.amount = am;
     } else {
@@ -114,7 +112,9 @@ export class DonationRequest {
   }
 
   public toggleCurrency(): void {
-    this.showForeignCurrency = !this.showForeignCurrency;
+    if (this.currency) {
+      this.showForeignCurrency = !this.showForeignCurrency;
+    }
   }
 
   public processToPayment(): void {
@@ -165,14 +165,14 @@ export class DonationRequest {
       <div class='font-mono w-full'>
         <div class='step_1 p-8 mt-2'>
           <div class='font-medium tracking-wide text-center text-gray-700'>
-            <div class='text-3xl font-'>Donate to</div>
+            <div class='text-3xl font-'>Donate {this.merchant ? <span>to</span> : ''}</div>
             <div class='text-xl'>{this.merchant}</div>
           </div>
 
           <form class='flex-auto p-4'>
             <div class='flex flex-wrap'>
               <div class='w-full flex-none text-sm font-medium text-gray-400 mt-2 text-right'>
-                <a class={'cursor-pointer hover:underline' + this.highlightCurrency('iota')} onClick={() => this.toggleCurrency()}>MIOTA</a> 
+                <a class={'cursor-pointer hover:underline' + this.highlightCurrency('iota')} onClick={() => this.toggleCurrency()}>IOTA</a> 
                 {this.currency ? 
                 <span>/<a class={'cursor-pointer hover:underline' + this.highlightCurrency('f')} onClick={() => this.toggleCurrency()}>{this.currency}</a></span>
                 : ''}
@@ -200,15 +200,6 @@ export class DonationRequest {
               {this.renderTotalDonationAmount()}
               {this.renderLastDonationTimestamp()}
             </div>
-
-            {this.balanceHistory.length > 0 ? 
-            <div>
-              Other donations:
-              {this.balanceHistory.map((line) =>
-                  {return this.renderTransactionalHistory(line)}
-              )}
-            </div> : ''} 
-
           </form>
         </div>
       </div>
@@ -226,10 +217,16 @@ export class DonationRequest {
           </ibtn-payment-process>
         );
       } else {
+        // We must convert it to IOTA and pass it as that.
+        let amount: number = this.amount;
+        if (this.currency) {
+          amount = CurrencyHelper.convertFiatToIota(amount, this.currencyExchangeRate);
+        }
+
         return (
           <ibtn-payment-process class='content' 
             address={this.address} balanceHistory={this.balanceHistory}
-            amount={CurrencyHelper.convertFiatToIota(this.amount, this.currencyExchangeRate)} 
+            amount={amount} 
             balance={this.balance} currencyExchangeRate={this.currencyExchangeRate} 
             usdExchangeRate={this.usdExchangeRate}>
           </ibtn-payment-process>

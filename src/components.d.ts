@@ -70,10 +70,6 @@ export namespace Components {
          */
         "currencyExchangeRate": number;
         /**
-          * Default amounts
-         */
-        "defAmounts": number[];
-        /**
           * Merchant name
          */
         "merchant": string;
@@ -284,10 +280,6 @@ declare namespace LocalJSX {
           * Currency exchange rate.
          */
         "currencyExchangeRate"?: number;
-        /**
-          * Default amounts
-         */
-        "defAmounts"?: number[];
         /**
           * Merchant name
          */
