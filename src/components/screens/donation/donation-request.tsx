@@ -134,7 +134,7 @@ export class DonationRequest {
       return (
         <p>Total donated amount 
           <a onClick={() => openTangleExplorer(this.address)}>
-            <b>{CurrencyHelper.printBalanceAmount(this.balance, this.currency, this.currencyExchangeRate)}</b>
+            <b> {CurrencyHelper.printBalanceAmount(this.balance, this.currency, this.currencyExchangeRate)}</b>
           </a>
         </p>
       );
@@ -154,7 +154,6 @@ export class DonationRequest {
   public renderTransactionalHistory(line: BalanceHistory) {
     return (
       <span>
-        <br /><br />
         <a href={tangleExplorerUrl(line.outputId)} target='new'>{DateTimeHelper.fromNow(line.timestamp)}</a> - {UnitsHelper.formatBest(line.amount, 2)}
       </span>
     )

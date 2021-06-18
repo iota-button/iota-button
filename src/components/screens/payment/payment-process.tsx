@@ -60,8 +60,7 @@ export class PaymentProcess {
   public renderTransactionalHistory(line: BalanceHistory) {
     return (
       <span>
-        <br /><br />
-        <a href={tangleExplorerUrl(line.outputId)} target='new'>{DateTimeHelper.fromNow(line.timestamp)}</a> - {UnitsHelper.formatBest(line.amount, 2)}
+        <a class="no-underline text-gray-600" href={tangleExplorerUrl(line.outputId)} target='new'>{DateTimeHelper.fromNow(line.timestamp)}</a> - {UnitsHelper.formatBest(line.amount, 2)}
       </span>
     )
   }
@@ -107,15 +106,14 @@ export class PaymentProcess {
             </div>
 
             {this.balanceHistory.length > 0 ? 
-            <span>
-              History:
+            <div class="flex flex-col">
               {this.balanceHistory.map((line) =>
                   {return this.renderTransactionalHistory(line)}
               )}
-            </span> : ''} 
+            </div> : ''}  
             
 
-            <div class='text-sm text-gray-500 leading-3 pt-2'>
+            <div class='text-sm text-gray-500 leading-3 pt-4'>
               <p>No fees, your terms, full privacy.</p>
             </div>
           </div>
