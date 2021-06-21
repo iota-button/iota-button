@@ -180,8 +180,13 @@ export class IotaButton {
       this.balance = result.address.balance;
 
       // Get address details.
-      if (balanceOnly !== true && result?.addressOutputIds) {
-        for (let o of result.addressOutputIds) {
+      let arr: string[] = result?.addressOutputIds;
+      if (result?.historicAddressOutputIds.length > 0) {
+        arr = arr.concat(result?.historicAddressOutputIds); 
+      }
+
+      if (balanceOnly !== true && arr) {
+        for (let o of arr) {
           // Let's validate output is not yet within our array. If so, skip. Immutable beaty.
           if (find(this.balanceHistory, { outputId: o})) {
             return;
