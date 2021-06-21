@@ -34,8 +34,6 @@ Adding IOTA button to existing websites should be simple and easy to implement. 
 
 At the moment, wallet implements payment and donation flow. Once Firefly supports messages, we will be able to detect arrival of the payment. We are not able to distinguish the payment from others atm. Although, we show user historical payments and continue to monitor it so they'll see their payment coming through. 
 
-
-
 ## Roadmap / Suggested Enhancements / Use cases
 
 See list of suggested enhancements to be discussed in our discussion forum.
