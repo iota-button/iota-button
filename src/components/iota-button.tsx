@@ -187,7 +187,7 @@ export class IotaButton {
 
       if (balanceOnly !== true && arr) {
         for (let o of arr) {
-          // Let's validate output is not yet within our array. If so, skip. Immutable beaty.
+          // Let's validate output is not yet within our array. If so, skip. Immutable beauty.
           if (find(this.balanceHistory, { outputId: o})) {
             return;
           }
