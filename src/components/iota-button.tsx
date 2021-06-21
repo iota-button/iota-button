@@ -181,7 +181,7 @@ export class IotaButton {
 
       // Get address details.
       let arr: string[] = result?.addressOutputIds;
-      if (result?.historicAddressOutputIds.length > 0) {
+      if (result?.historicAddressOutputIds?.length > 0) {
         arr = arr.concat(result?.historicAddressOutputIds); 
       }
 

@@ -130,17 +130,28 @@ export class DonationRequest {
   }
 
   public renderTotalDonationAmount() {
-    if (this.balance > 0) {
+    if (this.getTotalDonatatedAmount() > 0) {
       return (
         <p>Total donated amount 
           <a onClick={() => openTangleExplorer(this.address)}>
-            <b> {CurrencyHelper.printBalanceAmount(this.balance, this.currency, this.currencyExchangeRate)}</b>
+            <b> {CurrencyHelper.printBalanceAmount(this.getTotalDonatatedAmount(), this.currency, this.currencyExchangeRate)}</b>
           </a>
         </p>
       );
     } else {
       return '';
     }
+  }
+
+  public getTotalDonatatedAmount() {
+    let total: number = 0;
+    if (this.balanceHistory?.length > 0) {
+      for (let b of this.balanceHistory) {
+        total += b.amount;
+      }
+    } 
+    
+    return total;
   }
 
   public renderLastDonationTimestamp() {
