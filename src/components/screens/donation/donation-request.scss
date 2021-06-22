@@ -27,14 +27,14 @@ input[type="radio"] {
         margin: -1px 4px 0 0;
         vertical-align: middle;
         cursor: pointer;
-        border-radius: 50%;
+        border-radius: 0.25rem;
         border: 2px solid #ffffff;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
         background-repeat: no-repeat;
         background-position: center;
         text-align: center;
         line-height: 50px;
         overflow: hidden;
+        background: #d1d5db;
       }
   }
 
@@ -45,11 +45,19 @@ input[type="radio"] {
     margin: 0;
     outline: none;
   }
+
+  input {
+    border-color:  #a0aec0;
+    background: #d1d5db;
+  }
   
   input:focus,
   input:not(:placeholder-shown) {
     outline: none;
+    
     border-color: #333;
+    background: #333;
+    color: white;
   }
   
   ::placeholder {
