@@ -52,7 +52,7 @@ input[type="radio"] {
   }
   
   input:focus,
-  input:not(:placeholder-shown) {
+  .input-selected {
     outline: none;
     
     border-color: #333;

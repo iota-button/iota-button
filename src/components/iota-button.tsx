@@ -64,7 +64,7 @@ export class IotaButton {
   /**
    * Show modal. This is default by true but can be overwriten.
    */
-  @State() show: boolean = false;
+  @Prop({ mutable: true }) show: 'false'|'true' = 'false';
 
   /**
    * Current address balance.
@@ -85,7 +85,7 @@ export class IotaButton {
   private milestones: IMilestoneResponse[] = [];
   private addressSyncTimer: NodeJS.Timeout;
   private exchangeRateSyncTimer: NodeJS.Timeout;
-
+  
   constructor() {
     // Initialising necessary services.
     ServiceFactory.register('api-client', () => new ApiClient(Config.API_ENDPOINT));
@@ -117,9 +117,9 @@ export class IotaButton {
       }
     }
 
-    this.getLatestAddressBalance(true);
+    this.getLatestAddressBalance(this.show === 'false');
     this.addressSyncTimer = setInterval(() => {
-      this.getLatestAddressBalance(!this.show);
+      this.getLatestAddressBalance(this.show === 'false');
     }, Config.SYNC_ADDRESS_FREQUENCY);
 
     this.refreshCurrenciesAndExchangeRates();
@@ -172,6 +172,11 @@ export class IotaButton {
    * TODO: In the future, we want to implement our own web-service that combines this into one request. This is just no efficent.
    */
   private async getLatestAddressBalance(balanceOnly: boolean = true): Promise<void> {
+    // We only continue if we are showing modal or it's balance.
+    if (this.type !== 'balance' && this.show === 'false') {
+      return;
+    }
+
     try {
       const result: ISearchResponse = await fClient().search({
         network: Config.API_NETWORK,
@@ -238,22 +243,50 @@ export class IotaButton {
     }
   }
 
-  private handleClick(): void {
+  private openModal(): void {
     // Balance we simply redirect to tangle explorer.
     if (this.type === BUTTON_TYPES.BALANCE) {
       return;
     }
 
     this.balanceHistory = [];
-    this.show = !this.show;
+    const modal: HTMLElement = document.createElement('iota-button');
+    if (this.address) {
+      modal.setAttribute('address', this.address);
+    }
+    if (this.label) {
+      modal.setAttribute('label', this.label);
+    }
+    if (this.type) {
+      modal.setAttribute('type', this.type);
+    }
+    if (this.amount) {
+      modal.setAttribute('amount', this.amount.toString());
+    }
+    if (this.merchant) {
+      modal.setAttribute('merchant', this.merchant);
+    }
+    if (this.currency) {
+      modal.setAttribute('currency', this.currency);
+    }
+    if (this.tranid) {
+      modal.setAttribute('tranid', this.tranid);
+    }
+    modal.setAttribute('show', 'true');
+    document.body.prepend(modal);
+  }
 
-    // If show let's make sure we load the history asap.
-    if (this.show) {
-      this.getLatestAddressBalance(false);
+  private closeModal(): void {
+    // IOTA Button that we are showing should always be the first element.
+    // But just in case, let's search for element with show=true only.
+    // const el: any = document.getElementsByTagName('iota-button')[0];
+    const el: any = document.querySelectorAll('iota-button[show="true"]')?.[0];
+    if (el) {
+      el.remove();
     }
   }
 
-  private renderContent(): void {
+  private renderContent(): any {
     let content: string;
     if (this.type === BUTTON_TYPES.PAYMENT) {
       content = <ibtn-payment-process class='content' 
@@ -272,13 +305,13 @@ export class IotaButton {
     }
 
     return (
-      <div class={'ib-overlay-container animate'}>
+      <div class='ib-overlay-container animate'>
         <div class='ib-overlay-backdrop'></div>
         <div class='ib-overlay'>
           <div class='ib-modal-container'>
             <div class='ib-modal'>
               {content}
-              <ibtn-modal-close class='close' onClick={() => this.handleClick()}></ibtn-modal-close>
+              <ibtn-modal-close class='close' onClick={() => this.closeModal()}></ibtn-modal-close>
             </div>
           </div>
         </div>
@@ -290,18 +323,18 @@ export class IotaButton {
     /* Handling which button to show. For now only Balance or Payment supported. */
     let button: any;
     if (this.type === BUTTON_TYPES.PAYMENT) {
-      button = <ibtn-button-payment disabled={this.show} onClick={() => this.handleClick()}  label={this.label}></ibtn-button-payment>;
+      button = <ibtn-button-payment onClick={() => this.openModal()}  label={this.label}></ibtn-button-payment>;
     } else if (this.type === BUTTON_TYPES.DONATION) {
-      button = <ibtn-button-donation disabled={this.show} onClick={() => this.handleClick()}  label={this.label}></ibtn-button-donation>;
+      button = <ibtn-button-donation onClick={() => this.openModal()}  label={this.label}></ibtn-button-donation>;
     } else {
-      button = <ibtn-button-balance disabled={this.show} onClick={() => openTangleExplorer(this.address)}  
+      button = <ibtn-button-balance onClick={() => openTangleExplorer(this.address)}  
               label={this.label + ' ' + CurrencyHelper.printBalanceAmount(this.balance, this.currency, this.currencyExchangeRate)}></ibtn-button-balance>;
     }
 
     return (
       <host>
-        {button}
-        {this.show ? this.renderContent() : ''}
+        {this.show === 'false' ? button : ''}
+        {this.show === 'true' ? this.renderContent() : ''}
       </host>
     );
   }

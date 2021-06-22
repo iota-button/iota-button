@@ -142,6 +142,10 @@ export namespace Components {
          */
         "merchant": string;
         /**
+          * Show modal. This is default by true but can be overwriten.
+         */
+        "show": 'false'|'true';
+        /**
           * Unique tran id to understand we received this particular payment. You must make sure you provide an unique ID. Otherwise, system might think that the payment was already finalised.
          */
         "tranid": string;
@@ -352,6 +356,10 @@ declare namespace LocalJSX {
           * Merchant name
          */
         "merchant"?: string;
+        /**
+          * Show modal. This is default by true but can be overwriten.
+         */
+        "show"?: 'false'|'true';
         /**
           * Unique tran id to understand we received this particular payment. You must make sure you provide an unique ID. Otherwise, system might think that the payment was already finalised.
          */
