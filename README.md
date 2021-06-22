@@ -42,6 +42,9 @@ Big thanks to @obany and his work on: https://github.com/iotaledger/explorer
 
 > Personally, I love the idea of eventually integrating MAM channels as part of the iota-button to support thread/chat/conversations together with [https://github.com/iotaledger/identity.rs](DID) it can cover huge amount of use cases. We might have more on this soon.
 
+## Integration into other systems
+* Wordpress plugin - https://github.com/LFSanja/iota-pay-wordpress
+
 ## Technology
 
 * Stencil.js (https://stenciljs.com/)
