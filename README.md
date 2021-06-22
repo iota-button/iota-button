@@ -50,7 +50,7 @@ Big thanks to @obany and his work on: https://github.com/iotaledger/explorer
 
 ## Get Involved
 
-If you're interested to get involved reach out to me on twitter (https://twitter.com/adam_unchained) or IOTA's discord (#adam_unchained)
+If you're interested to get involved reach out to me on twitter (https://twitter.com/adam_unchained) or IOTA's discord (#adam_unchained#5334)
 
 Any feedback will be highly appreciated.
 
