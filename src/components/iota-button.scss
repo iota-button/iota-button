@@ -137,7 +137,7 @@
     }
 
     .content {
-      @apply relative border-0 pointer-events-auto rounded-lg flex flex-col items-center;
+      @apply relative border-0 pointer-events-auto rounded-sm flex flex-col items-center;
 
       background-color: #fff;
       background-clip: padding-box;
@@ -160,19 +160,16 @@
     
     }
     .close {
-      @apply block absolute cursor-pointer text-center top-0;
+      @apply block absolute cursor-pointer;
   
-      color: white;
-      right: -90px;
+      color: #d1d5db;
+      right: 16px;
+      top: 16px;
 
       @media only screen and (max-width: 640px) {
         right: 8px;
         top: 8px;
-        color: black;
-
-        .close-text {
-          display: none;
-        }
+        
       }
 
     }

@@ -25,7 +25,7 @@ export class DonationRequest {
    * Merchant name
    */
   @Prop() merchant: string;
-    
+
   /**
    * Real currency code. Error is thrown if currency not supported.
    * Undefined means MIOTA
@@ -67,6 +67,9 @@ export class DonationRequest {
    */
   @State() paymentStep: boolean = false;
 
+  // Indicate whenever we are using custom donation.
+  @State() customDonationValue: any;
+
   protected connectedCallback(): void {
     this.showForeignCurrency = !!this.currency;
 
@@ -94,20 +97,26 @@ export class DonationRequest {
     const active: boolean = (this.amount === value);
     return (
       <label class='label'>
-        <input class={'w-9 h-9 flex items-center justify-center' + active ? 'bg-gray-100 rounded-lg' : ''} 
-               name='size' type='radio' value={value} checked={active}  onChange={(e) => this.handleCustomDonation(e)}/>
+        <input type='radio' class={'w-9 h-9 flex items-center justify-center' + active ? 'bg-gray-100 rounded-lg' : ''}
+          name='size' value={value} checked={active} onChange={(e) => this.handleDonation(e)} />
         <span>{this.getPrintAmount(value)}</span>
       </label>
     )
   }
 
-  public handleCustomDonation(event: Event): void {
+  public handleDonation(event: Event, custom: boolean = false): void {
     // I'm not happy with below. Very messy.
     const am: number = parseFloat((event.target as HTMLInputElement).value);
-    if (am > 0) {
-      this.amount = am;
+    this.customDonationValue = am;
+    if (this.customDonationValue > 0) {
+      this.amount = this.customDonationValue;
     } else {
       this.amount = this.defAmounts[0];
+    }
+
+    // Handle if it's custom amount.
+    if (this.defAmounts.indexOf(this.customDonationValue) > -1 && custom === false) {
+      this.customDonationValue = '';
     }
   }
 
@@ -121,7 +130,7 @@ export class DonationRequest {
     this.paymentStep = true;
   }
 
-  public highlightCurrency(foreign: 'f'|'iota'): string {
+  public highlightCurrency(foreign: 'f' | 'iota'): string {
     if ((foreign === 'f' && this.showForeignCurrency) || (foreign === 'iota' && !this.showForeignCurrency)) {
       return 'font-bold text-gray-500';
     } else {
@@ -132,9 +141,9 @@ export class DonationRequest {
   public renderTotalDonationAmount() {
     if (this.getTotalDonatatedAmount() > 0) {
       return (
-        <p>Total donated amount 
+        <p>Total donated amount
           <a onClick={() => openTangleExplorer(this.address)}>
-            <b> {CurrencyHelper.printBalanceAmount(this.getTotalDonatatedAmount(), this.currency, this.currencyExchangeRate)}</b>
+            <b class="text-gray-700"> {CurrencyHelper.printBalanceAmount(this.getTotalDonatatedAmount(), this.currency, this.currencyExchangeRate)}</b>
           </a>
         </p>
       );
@@ -149,14 +158,14 @@ export class DonationRequest {
       for (let b of this.balanceHistory) {
         total += b.amount;
       }
-    } 
-    
+    }
+
     return total;
   }
 
   public renderLastDonationTimestamp() {
     if (this.balanceHistory?.[0]) {
-      return <p>Last donation <b>{DateTimeHelper.fromNow(this.balanceHistory[0].timestamp)}</b></p>;
+      return <p>Last donation <b class="text-gray-700">{DateTimeHelper.fromNow(this.balanceHistory[0].timestamp)}</b></p>;
     } else {
       return '';
     }
@@ -181,26 +190,25 @@ export class DonationRequest {
 
           <form class='flex-auto p-4'>
             <div class='flex flex-wrap'>
-              <div class='w-full flex-none text-sm font-medium text-gray-400 mt-2 text-right'>
-                <a class={'cursor-pointer hover:underline' + this.highlightCurrency('iota')} onClick={() => this.toggleCurrency()}>IOTA</a> 
-                {this.currency ? 
-                <span>/<a class={'cursor-pointer hover:underline' + this.highlightCurrency('f')} onClick={() => this.toggleCurrency()}>{this.currency}</a></span>
-                : ''}
+              <div class='w-full flex-none text-lg font-medium text-gray-400 py-2'>
+                <a class={'cursor-pointer hover:underline' + this.highlightCurrency('iota')} onClick={() => this.toggleCurrency()}>IOTA</a>
+                {this.currency ?
+                  <span>/<a class={'cursor-pointer hover:underline' + this.highlightCurrency('f')} onClick={() => this.toggleCurrency()}>{this.currency}</a></span>
+                  : ''}
               </div>
             </div>
-            <div class='flex items-baseline mb-6 border border-solid py-8 px-4 rounded-lg border-gray-400'>
+            <div class='flex items-baseline mb-6'>
               <div class='space-x-2 flex items-center text-sm w-full justify-between'>
-                {this.defAmounts.map((v) =>
-                  {return this.renderCircleValue(v)}
+                {this.defAmounts.map((v) => { return this.renderCircleValue(v) }
                 )}
-                <input onInput={(e) => this.handleCustomDonation(e)}
-                       class='input_number w-16 p-4 border rounded-lg border-gray-200 border-solid font-mono text-sm' type='number' />
+                <input type='number' onInput={(e) => this.handleDonation(e, true)} value={this.customDonationValue}
+                  class={'input_number w-16 p-4 border rounded-sm border-solid font-mono text-sm ' + (this.customDonationValue > 0 ? 'input-selected' : '')}/>
               </div>
             </div>
             <div class='flex space-x-3 mb-4 text-sm font-medium'>
               <div class='flex-auto flex space-x-3'>
-                <button  onClick={() => this.processToPayment()}
-                  class='cursor-pointer w-full flex items-center justify-center text-lg rounded-md bg-black text-white h-12 hover:bg-gray-800' 
+                <button onClick={() => this.processToPayment()}
+                  class='font-mono cursor-pointer w-full flex items-center justify-center border-solid text-lg rounded-sm bg-yellow-400 hover:bg-yellow-300 border-yellow-400 hover:border-yellow-300 h-12'
                   type='button'>
                   Donate {this.getPrintAmount(this.amount)}
                 </button>
@@ -220,9 +228,9 @@ export class DonationRequest {
     if (this.paymentStep) {
       if (this.showForeignCurrency) {
         return (
-          <ibtn-payment-process class='content' 
+          <ibtn-payment-process class='content'
             currency={this.currency} address={this.address} balanceHistory={this.balanceHistory}
-            amount={this.amount} balance={this.balance} currencyExchangeRate={this.currencyExchangeRate} 
+            amount={this.amount} balance={this.balance} currencyExchangeRate={this.currencyExchangeRate}
             usdExchangeRate={this.usdExchangeRate}>
           </ibtn-payment-process>
         );
@@ -234,10 +242,10 @@ export class DonationRequest {
         }
 
         return (
-          <ibtn-payment-process class='content' 
+          <ibtn-payment-process class='content'
             address={this.address} balanceHistory={this.balanceHistory}
-            amount={amount} 
-            balance={this.balance} currencyExchangeRate={this.currencyExchangeRate} 
+            amount={amount}
+            balance={this.balance} currencyExchangeRate={this.currencyExchangeRate}
             usdExchangeRate={this.usdExchangeRate}>
           </ibtn-payment-process>
         );

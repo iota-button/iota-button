@@ -80,7 +80,7 @@ export class PaymentProcess {
     return (
       <div class='font-mono w-full'>
         <div class='step_2 p-8 '>
-          <div class='font-medium tracking-wide text-center text-gray-700 mb-2'>
+          <div class='font-medium tracking-wide text-center text-gray-700 mb-2 mt-4 md:mt-0 md:text-left'>
             <div class='text-xl'>
               <span>You will be charged </span>
               {this.currency ?
@@ -104,10 +104,10 @@ export class PaymentProcess {
           </div>
 
           <div class='flex-auto p-4'>
-            <div class='text-lg'>Pay with...</div>
+            <div class='text-lg py-2'>Pay with...</div>
             <div class='flex space-x-3 mb-4 text-sm font-medium'>
               <div class='flex-auto flex space-x-3'>
-                <a class='cursor-pointer no-underline w-full flex items-center justify-center text-lg rounded-md bg-blue-600 text-white h-12 hover:bg-blue-800' 
+                <a class='cursor-pointer font-mono no-underline w-full flex items-center justify-center text-lg rounded-sm bg-blue-600 text-white h-12 hover:bg-blue-800' 
                   onClick={() => this.tempWarningDueFireflyIssue()}
                   href={FireflyHelper.getPayUrl(this.address, this.getAmountForWalet())}>Firefly wallet</a>
               </div>
