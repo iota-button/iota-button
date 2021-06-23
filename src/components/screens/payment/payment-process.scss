@@ -1,4 +1,16 @@
-/* none yet */
+.step_2 {
+  @media only screen and (min-width: 641px) {
+    padding: 2rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.foot_text {
+  @media only screen and (min-width: 641px) {
+    display: flex;
+    text-align: left;
+  }
+}
 
 .button {
     @apply rounded text-white m-4 p-4 no-underline;

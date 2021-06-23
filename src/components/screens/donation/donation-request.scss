@@ -1,4 +1,14 @@
-/* none yet */
+.step_1 {
+  @media only screen and (min-width: 641px) {
+    padding: 2rem;
+  }
+}
+
+.label_box {
+  @media only screen and (min-width: 641px) {
+    flex-wrap: nowrap;
+  }
+}
 
 .button {
     @apply rounded text-white m-4 p-4 no-underline;
@@ -22,22 +32,32 @@ input[type="radio"] {
 
     span {
         display: inline-block;
-        width: 50px;
-        height: 50px;
-        margin: -1px 4px 0 0;
+        width: 4rem;
+        height: 4rem;
         vertical-align: middle;
         cursor: pointer;
         border-radius: 0.25rem;
-        border: 2px solid #ffffff;
         background-repeat: no-repeat;
         background-position: center;
         text-align: center;
-        line-height: 50px;
+        line-height: 4rem;
         overflow: hidden;
         background: #d1d5db;
       }
   }
 
+  .footer_container {
+    @media only screen and (min-width: 641px) {
+      line-height: 1rem;
+    }
+  }
+  
+  .foot_text {
+    @media only screen and (min-width: 641px) {
+      display: block;
+      text-align: left;
+    }
+  }
   
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -45,21 +65,52 @@ input[type="radio"] {
     margin: 0;
     outline: none;
   }
-
-  input {
-    border-color:  #a0aec0;
-    background: #d1d5db;
-  }
   
   input:focus,
   .input-selected {
     outline: none;
     
-    border-color: #333;
-    background: #333;
-    color: white;
+    border-color: #333 !important;
+    background: #333 !important;
+    color: white !important;
   }
   
   ::placeholder {
     color: #cbd5e0;
+  }
+
+  .input-box {
+    display: flex;
+    align-items: baseline;
+    border-color:  #a0aec0;
+    background: #d1d5db;
+    overflow: hidden;
+
+    padding: 0.375rem 0.75rem;
+
+    @media only screen and (min-width: 641px) {
+      width: 4rem; 
+      margin-top: 0;
+    }
+  }
+  
+  .input-box .prefix {
+    font-weight: 300;
+    line-height: 3rem;
+    font-size: 1rem;
+  }
+  
+  .input-box input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    line-height: 3rem;
+    width: 100%;
+  }
+  
+  .input-box:focus-within {
+    border-color: #777;
+    background: #333;
+    color: white;
   }
