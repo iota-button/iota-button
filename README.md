@@ -5,6 +5,7 @@ IOTA Button - No fees, your terms, full privacy.
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Generic badge](https://img.shields.io/badge/STATUS-PROTOTYPE-blue.svg)](https://shields.io/)
 [![GitHub issues](https://img.shields.io/github/issues/iota-button/iota-button.svg)](https://GitHub.com/iota-button/iota-button/issues/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5f84f1fa-ffa4-43ba-a9e2-7a395aeefecb/deploy-status)](https://app.netlify.com/sites/iota-button/deploys)
 
 > This project is an initial prototype to share it with IOTA community to collect feedback.
 
