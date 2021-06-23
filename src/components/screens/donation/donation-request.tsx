@@ -107,7 +107,7 @@ export class DonationRequest {
   public handleDonation(event: Event, custom: boolean = false): void {
     // I'm not happy with below. Very messy.
     const am: number = parseFloat((event.target as HTMLInputElement).value);
-    this.customDonationValue = am;
+    this.customDonationValue = isNaN(am) ? '' : am;
     if (this.customDonationValue > 0) {
       this.amount = this.customDonationValue;
     } else {
@@ -202,7 +202,7 @@ export class DonationRequest {
                 {this.defAmounts.map((v) => { return this.renderCircleValue(v) }
                 )}
                 <div class="input-box border rounded-sm border-solid mt-2 w-full">
-                  <span class="prefix font-mono text-sm">$</span>
+                    <span class="prefix font-mono text-sm">{(this.showForeignCurrency) ? CurrencyHelper.fCurrencyService().getSymbol(this.currency) : 'i'}</span>
                   <input type='number' onInput={(e) => this.handleDonation(e, true)} value={this.customDonationValue}
                     class={'font-mono text-sm' + (this.customDonationValue > 0 ? 'input-selected' : '')} />
                 </div>
