@@ -79,9 +79,9 @@ export class PaymentProcess {
   render() {
     return (
       <div class='font-mono w-full'>
-        <div class='step_2 p-8 '>
-          <div class='font-medium tracking-wide text-center text-gray-700 mb-2 mt-4 md:mt-0 md:text-left'>
-            <div class='text-xl'>
+        <div class='step_2 p-2 mt-8'>
+          <div class='font-medium tracking-wide text-center text-gray-700'>
+            <div class='text-3xl font-mono p-4'>
               <span>You will be charged </span>
               {this.currency ?
                 <span>
@@ -118,14 +118,14 @@ export class PaymentProcess {
             </div>
 
             {this.balanceHistory.length > 0 ? 
-            <div class="flex flex-col">
+            <div class="foot_text flex flex-col text-center">
               {this.balanceHistory.map((line) =>
                   {return this.renderTransactionalHistory(line)}
               )}
             </div> : ''}  
             
 
-            <div class='text-sm text-gray-500 leading-3 pt-4'>
+            <div class='foot_text text-sm text-gray-500 leading-3 pt-4 text-center'>
               <p>No fees, your terms, full privacy.</p>
             </div>
           </div>

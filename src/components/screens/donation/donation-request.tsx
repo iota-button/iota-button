@@ -141,7 +141,7 @@ export class DonationRequest {
   public renderTotalDonationAmount() {
     if (this.getTotalDonatatedAmount() > 0) {
       return (
-        <p>Total donated amount
+        <p class="foot_text flex flex-col text-center">Total donated amount
           <a onClick={() => openTangleExplorer(this.address)}>
             <b class="text-gray-700"> {CurrencyHelper.printBalanceAmount(this.getTotalDonatatedAmount(), this.currency, this.currencyExchangeRate)}</b>
           </a>
@@ -165,7 +165,7 @@ export class DonationRequest {
 
   public renderLastDonationTimestamp() {
     if (this.balanceHistory?.[0]) {
-      return <p>Last donation <b class="text-gray-700">{DateTimeHelper.fromNow(this.balanceHistory[0].timestamp)}</b></p>;
+      return <p class="foot_text flex flex-col text-center">Last donation <b class="text-gray-700">{DateTimeHelper.fromNow(this.balanceHistory[0].timestamp)}</b></p>;
     } else {
       return '';
     }
@@ -182,9 +182,9 @@ export class DonationRequest {
   public renderDonationWidget() {
     return (
       <div class='font-mono w-full'>
-        <div class='step_1 p-8 mt-2'>
+        <div class='step_1 p-2 mt-2'>
           <div class='font-medium tracking-wide text-center text-gray-700'>
-            <div class='text-3xl font-'>Donate {this.merchant ? <span>to</span> : ''}</div>
+            <div class='text-3xl font-mono p-4'>Donate {this.merchant ? <span>to</span> : ''}</div>
             <div class='text-xl'>{this.merchant}</div>
           </div>
 
@@ -198,11 +198,14 @@ export class DonationRequest {
               </div>
             </div>
             <div class='flex items-baseline mb-6'>
-              <div class='space-x-2 flex items-center text-sm w-full justify-between'>
+              <div class='label_box space-x-2 space-y-2 flex items-center text-sm w-full justify-between flex-wrap'>
                 {this.defAmounts.map((v) => { return this.renderCircleValue(v) }
                 )}
-                <input type='number' onInput={(e) => this.handleDonation(e, true)} value={this.customDonationValue}
-                  class={'input_number w-16 p-4 border rounded-sm border-solid font-mono text-sm ' + (this.customDonationValue > 0 ? 'input-selected' : '')}/>
+                <div class="input-box border rounded-sm border-solid mt-2 w-full">
+                  <span class="prefix font-mono text-sm">$</span>
+                  <input type='number' onInput={(e) => this.handleDonation(e, true)} value={this.customDonationValue}
+                    class={'font-mono text-sm' + (this.customDonationValue > 0 ? 'input-selected' : '')} />
+                </div>
               </div>
             </div>
             <div class='flex space-x-3 mb-4 text-sm font-medium'>
@@ -214,7 +217,7 @@ export class DonationRequest {
                 </button>
               </div>
             </div>
-            <div class='text-sm text-gray-500 leading-3 pt-2'>
+            <div class='footer_container text-sm text-gray-500 leading-8 pt-2'>
               {this.renderTotalDonationAmount()}
               {this.renderLastDonationTimestamp()}
             </div>

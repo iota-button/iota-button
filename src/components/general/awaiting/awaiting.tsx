@@ -19,13 +19,12 @@ export class Awaiting {
         {/* <span class="text-sm self-start">(balance {this.amount})</span> */}
 
 
-        <div class="pending-dots block relative w-20 h-5 mt-2">
+        <div class="pending-dots block relative w-20 h-5 mt-4">
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
           <div class="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
         </div>
-
       </div>
     );
   }
