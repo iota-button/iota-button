@@ -204,7 +204,7 @@ export class DonationRequest {
                 <div class="input-box border rounded-sm border-solid mt-2 w-full">
                     <span class="prefix font-mono text-sm">{(this.showForeignCurrency) ? CurrencyHelper.fCurrencyService().getSymbol(this.currency) : 'i'}</span>
                   <input type='number' onInput={(e) => this.handleDonation(e, true)} value={this.customDonationValue}
-                    class={'font-mono text-sm' + (this.customDonationValue > 0 ? 'input-selected' : '')} />
+                    class={'font-mono text-md ' + (this.customDonationValue > 0 ? 'input-selected' : '')} />
                 </div>
               </div>
             </div>

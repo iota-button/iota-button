@@ -81,7 +81,7 @@ input[type="radio"] {
 
   .input-box {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     border-color:  #a0aec0;
     background: #d1d5db;
     overflow: hidden;
@@ -107,6 +107,8 @@ input[type="radio"] {
     outline: none;
     line-height: 3rem;
     width: 100%;
+    font-size: 0.875rem !important;
+
   }
   
   .input-box:focus-within {
