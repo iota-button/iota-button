@@ -9,31 +9,31 @@ IOTA Button - No fees, your terms, full privacy.
 
 > This project is an initial prototype to share it with IOTA community to collect feedback.
 
-Adding IOTA button to existing websites should be simple and easy to implement. It should work without registration (or accesing any of your private data) and ideally can be implemented by anyone (even those without coding experience). This is what IOTA button trying to do. 
+Adding IOTA button to existing websites should be simple and easy to implement. It should work without registration (or accesing any of your private data) and ideally can be implemented by anyone (even those without coding experience). This is what IOTA button trying to do.
 
 ** Easy to use configurable HTML component **
 
 ```javascript
 // Add JS scripts to your website
-<script type="module" src="//iota-button.org/build/iota-button.esm.js"></script>
-<script nomodule src="//iota-button.org/build/iota-button.js"></script> 
+<script type="module" src="//shortaktien.de/build/iota-button.esm.js"></script>
+<script nomodule src="//shortaktien.de/build/iota-button.js"></script> 
 ```
 
 ```javascript
 // Request $20 paid to IOTA address. Exchange rates refreshed every 1 minute.
-<iota-button address="iota1qpec4rvuxj4am5q3560k273amlumfged2mvhuhq4cazxjr6lvqxguye5wjh" 
+<iota-button address="iota1qpec4rvuxj4am5q3560k273amlumfged2mvhuhq4cazxjr6lvqxguye5wjh"
              amount="20" currency="USD">
 </iota-button>
 ```
 
 ```javascript
 // Show wallet balance in EUR
-<iota-button address="iota1qqmsaf9rl5ptn0dn5r534hzx9pmankmh3k790ljwupe44aacgdzjcjkawel" 
+<iota-button address="iota1qqmsaf9rl5ptn0dn5r534hzx9pmankmh3k790ljwupe44aacgdzjcjkawel"
              label="Wallet Balance" type="balance" currency="EUR">
-</iota-button> 
+</iota-button>
 ```
 
-At the moment, wallet implements payment and donation flow. Once Firefly supports messages, we will be able to detect arrival of the payment. We are not able to distinguish the payment from others atm. Although, we show user historical payments and continue to monitor it so they'll see their payment coming through. 
+At the moment, wallet implements payment and donation flow. Once Firefly supports messages, we will be able to detect arrival of the payment. We are not able to distinguish the payment from others atm. Although, we show user historical payments and continue to monitor it so they'll see their payment coming through.
 
 ## Roadmap / Suggested Enhancements / Use cases
 
