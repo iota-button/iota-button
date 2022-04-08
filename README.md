@@ -5,7 +5,7 @@ IOTA Button - No fees, your terms, full privacy.
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Generic badge](https://img.shields.io/badge/STATUS-PROTOTYPE-blue.svg)](https://shields.io/)
 [![GitHub issues](https://img.shields.io/github/issues/iota-button/iota-button.svg)](https://GitHub.com/iota-button/iota-button/issues/)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5f84f1fa-ffa4-43ba-a9e2-7a395aeefecb/deploy-status)](https://app.netlify.com/sites/iota-button/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/62995fde-1bad-4b98-b5de-4ca4ec072136/deploy-status)](https://app.netlify.com/sites/spiffy-arithmetic-ffbdf5/deploys)
 
 > This project is an initial prototype to share it with IOTA community to collect feedback.
 
@@ -16,7 +16,7 @@ Adding IOTA button to existing websites should be simple and easy to implement. 
 ```javascript
 // Add JS scripts to your website
 <script type="module" src="//shortaktien.de/build/iota-button.esm.js"></script>
-<script nomodule src="//shortaktien.de/build/iota-button.js"></script> 
+<script nomodule src="//shortaktien.de/build/iota-button.js"></script>
 ```
 
 ```javascript
@@ -45,6 +45,7 @@ Big thanks to @obany and his work on: https://github.com/iotaledger/explorer
 
 ## Integration into other systems
 * Wordpress plugin - https://github.com/LFSanja/iota-pay-wordpress
+* Joomla plugin - https://github.com/shortaktien/pay-with-iota-joomla
 
 ## Technology
 
@@ -65,4 +66,4 @@ Any feedback will be highly appreciated.
 
 ## Donations
 
-iota1qqnfhjeq0kzv9clem2r23hwte458teds8eucem75syn3zsrvts2xzp6gd8s
+iota1qppdexpdegzgj9uhyuefj6npdgjew5jqcvftgthaykmpnuxkgm36x3dqudg
