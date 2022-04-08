@@ -108,7 +108,7 @@ export class PaymentProcess {
             <div class='flex space-x-3 mb-4 text-sm font-medium'>
               <div class='flex-auto flex space-x-3'>
                 <a class='cursor-pointer font-mono no-underline w-full flex items-center justify-center text-lg rounded-sm bg-blue-600 text-white h-12 hover:bg-blue-800'
-                  onClick={() => this.tempWarningDueFireflyIssue()}
+                  //onClick={() => this.tempWarningDueFireflyIssue()}
                   href={FireflyHelper.getPayUrl(this.address, this.getAmountForWalet())}>Firefly wallet</a>
               </div>
             </div>
