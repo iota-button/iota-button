@@ -65,16 +65,16 @@ export class PaymentProcess {
     )
   }
 
-  private tempWarningDueFireflyIssue(): void {
-    // Unable to pass address/amount into Firefly. Waiting for: https://github.com/iotaledger/firefly/pull/773
-    setTimeout(() => {
-      prompt(
-        'Once Firefly fixes: https://github.com/iotaledger/firefly/pull/773 this will be automated. For now, please enter values manually.\n\n---\n' +
-        'Amount: ' + UnitsHelper.formatUnits(this.getAmountForWalet(), 'Mi') + '\n' + 
-        'Address: ', this.address
-      );
-    }, 1000);
-  }
+//  private tempWarningDueFireflyIssue(): void {
+//    // Unable to pass address/amount into Firefly. Waiting for: https://github.com/iotaledger/firefly/pull/773
+//    setTimeout(() => {
+//      prompt(
+//        'Once Firefly fixes: https://github.com/iotaledger/firefly/pull/773 this will be automated. For now, please enter values manually.\n\n---\n' +
+//        'Amount: ' + UnitsHelper.formatUnits(this.getAmountForWalet(), 'Mi') + '\n' +
+//        'Address: ', this.address
+//      );
+//    }, 1000);
+//  }
 
   render() {
     return (
@@ -107,7 +107,7 @@ export class PaymentProcess {
             <div class='text-lg py-2'>Pay with...</div>
             <div class='flex space-x-3 mb-4 text-sm font-medium'>
               <div class='flex-auto flex space-x-3'>
-                <a class='cursor-pointer font-mono no-underline w-full flex items-center justify-center text-lg rounded-sm bg-blue-600 text-white h-12 hover:bg-blue-800' 
+                <a class='cursor-pointer font-mono no-underline w-full flex items-center justify-center text-lg rounded-sm bg-blue-600 text-white h-12 hover:bg-blue-800'
                   onClick={() => this.tempWarningDueFireflyIssue()}
                   href={FireflyHelper.getPayUrl(this.address, this.getAmountForWalet())}>Firefly wallet</a>
               </div>
@@ -117,13 +117,13 @@ export class PaymentProcess {
               <ibtn-awaiting amount={UnitsHelper.formatBest(this.balance, 2)}></ibtn-awaiting>
             </div>
 
-            {this.balanceHistory.length > 0 ? 
+            {this.balanceHistory.length > 0 ?
             <div class="foot_text flex flex-col text-center">
               {this.balanceHistory.map((line) =>
                   {return this.renderTransactionalHistory(line)}
               )}
-            </div> : ''}  
-            
+            </div> : ''}
+
 
             <div class='foot_text text-sm text-gray-500 leading-3 pt-4 text-center'>
               <p>No fees, your terms, full privacy.</p>
