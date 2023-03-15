@@ -1,5 +1,5 @@
 export class FireflyHelper {
     public static getPayUrl(address: string, amount: number): string {
-        return 'iota://wallet/send/' + address + '?amt=' + amount;
+        return 'firefly://wallet/sendForm?' + address + '?amt=' + amount;
     }
 }
